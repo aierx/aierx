@@ -1,12 +1,8 @@
-# CXF WebService和Restful示例
-
->参考文档
->
 >[MySql+webService cxf+json 简单框架（转） - shenming - 博客园 (cnblogs.com)](https://www.cnblogs.com/shenming/p/4560871.html)
->
->项目地址：[aierx/qr - 码云 - 开源中国 (gitee.com)](https://gitee.com/aierx/qr)
 
-### 0、项目结构
+>[aierx/qr - 码云 - 开源中国 (gitee.com)](https://gitee.com/aierx/qr)
+
+# 项目结构
 
 ```
 ├─java
@@ -26,9 +22,9 @@
 └─resources
 ```
 
-### 1、pom.xml配置文件
+# pom.xml配置文件
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -91,7 +87,7 @@
 </project>
 ```
 
-### 2、实体文件
+# 实体文件
 
 ```java
 package org.example.model;
@@ -132,7 +128,7 @@ public class User {
 }
 ```
 
-### 3、rs服务接口
+# rs服务接口
 
 ```java
 package org.example.service.rs;
@@ -152,7 +148,7 @@ public interface IUserService {
 }
 ```
 
-### 4、rs服务实现
+# rs服务实现
 
 ```java
 package org.example.service.rs;
@@ -169,7 +165,7 @@ public class UserService  implements IUserService{
 }
 ```
 
-### 5、ws服务接口
+# ws服务接口
 
 ```java
 package org.example.service.ws;
@@ -187,7 +183,7 @@ public interface IUserWebService {
 }
 ```
 
-### 6、ws服务实现
+# ws服务实现
 
 ```java
 package org.example.service.ws;
@@ -206,7 +202,7 @@ public class UserWebService implements IUserWebService{
 }
 ```
 
-### 7、服务启动类
+# 服务启动类
 
 ```java
 package org.example;
@@ -237,7 +233,7 @@ public class Server {
 }
 ```
 
-### 8、客户端启动类
+# 客户端启动类
 
 ```java
 package org.example;

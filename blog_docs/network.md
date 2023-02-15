@@ -1,14 +1,17 @@
-# Windows Socket 网络编程基础
 # 前言
 近期学习了Windows平台下Socket开发的2中模式和5种I/O模型，以下是介绍这几种开发模式所要使用接口的核心示例，示例只有一个功能，客户端发送输入的字符串，服务接收后转为大写发送给客户端。
+
 # Socket基础
 我理解的Socket是：如果以五层传输协议为基础，Socket就是应用层访问传输层的接口。
 服务器流程：WSAStartup->Create Socket->bind->listen->accept->recv/send->close
 客户端流程：WSAStartup->Create Socket->connect->recv/send->close
 流程上很简单，但为什么Windows要提供那么多种开发模式楠。我们以recv为例，在调用recv的时候大致会有2个过程：1.内核等待数据；2.将数据复制到用户空间。这2个过程可以是同步或异步的，要实现高效的访问，需要你根据自己的设计选取不同的接口。所以核心是需要考虑accept，connect，recv，send这些接口是使用同步还是异步的。
+
 # 阻塞模式
- 套接字在执行操作时，调用函数在没有完成操作之前不会立即返回的工作模式。
- **客户端**
+
+> 套接字在执行操作时，调用函数在没有完成操作之前不会立即返回的工作模式。
+
+## 客户端
  这里只提供一个客户端示例，均可以同所有的服务器示例配合使用。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
@@ -145,7 +148,8 @@
  	return 1; 
  }
  ```
- **服务器**
+ 
+## 单线程服务器
  只能维护一个连接。
 
  ```cpp
@@ -287,7 +291,9 @@
  	return 1; 
  }
  ```
- 通过为每个连接开启一个线程来维护多个链接。
+ 
+## 通过为每个连接开启一个线程来维护多个链接。
+ 
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -571,8 +577,9 @@
  	return 1; 
  }
  ```
- 非阻塞模式
- 套接字在执行操作时，调用函数不管操作是否完成都会立即返回的工作模式。通过接口ioctlsocket设置socket为非阻塞模式。
+
+# 非阻塞模式
+ > 套接字在执行操作时，调用函数不管操作是否完成都会立即返回的工作模式。通过接口ioctlsocket设置socket为非阻塞模式。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -856,8 +863,8 @@
  	return 1; 
  }
  ```
- Select I/O模型
- 通过Select接口可以最多同时管理64个链接，多余的链接需要新开线程处理。Select接口是阻塞的并且数据拷贝到用户空间也是阻塞的。
+## Select I/O模型
+ > 通过Select接口可以最多同时管理64个链接，多余的链接需要新开线程处理。Select接口是阻塞的并且数据拷贝到用户空间也是阻塞的。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -1133,8 +1140,9 @@
  	return 1; 
  }
  ```
- WSAAsyncSelect I/O模型
- 通过Win窗口的消息机制实现非阻塞调用，但数据复制到用户空间是阻塞的。
+ 
+## WSAAsyncSelect I/O模型
+ > 通过Win窗口的消息机制实现非阻塞调用，但数据复制到用户空间是阻塞的。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -1418,8 +1426,9 @@
  	return 1; 
  }
  ```
- WSAEventSelect I/O模型
- 通过事件通知实现非阻塞调用，但数据复制到用户空间是阻塞的。并且一个WSAWaitForMultipleEvents接口最多管理64个事件，其余的需要新开线程。
+ 
+## WSAEventSelect I/O模型
+ > 通过事件通知实现非阻塞调用，但数据复制到用户空间是阻塞的。并且一个WSAWaitForMultipleEvents接口最多管理64个事件，其余的需要新开线程。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -1720,9 +1729,12 @@
  	return 1; 
  }
  ```
- Overlapped I/O模型
- 非阻塞调用，通过windows的重叠I/O机制实现数据复制到用户空间为非阻塞行为。 
- 以完成例程实现
+
+## Overlapped I/O模型
+
+ > 非阻塞调用，通过windows的重叠I/O机制实现数据复制到用户空间为非阻塞行为。
+  
+### 以完成例程实现
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -2022,7 +2034,8 @@
  	return 1; 
  }
  ```
- 以事件实现
+
+### 以事件实现
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -2357,9 +2370,10 @@
  	return 1; 
  }
  ```
- 完成端口 I/O模型
- 完成端口对象的并发线程会等待系统的I/Ocompletion packet，接收后会唤醒服务线程池中上一个执行的线程处理。
- 理解完成端口需要理解2个线程数量。[1]完成端口并发线程数；[2]服务线程数。这些线程数同CPU核心相关，一般[1]为CPU核心数，[2]为CPU核心数的2倍。那么理论上提高CPU核心就可以直接提高效率。
+ 
+## 完成端口 I/O模型
+ > 完成端口对象的并发线程会等待系统的I/Ocompletion packet，接收后会唤醒服务线程池中上一个执行的线程处理。
+ > 理解完成端口需要理解2个线程数量。[1]完成端口并发线程数；[2]服务线程数。这些线程数同CPU核心相关，一般[1]为CPU核心数，[2]为CPU核心数的2倍。那么理论上提高CPU核心就可以直接提高效率。
  ```cpp
  #define _WINSOCK_DEPRECATED_NO_WARNINGS 
   
@@ -2672,5 +2686,6 @@
  	return 1; 
  }
  ```
+
 # 总结
  通过学习Socket网络编程，我认为要开发高效的网络库应该需要注意阻塞，循环调用，线程数量，链接数，IO。这些在接下来学习商业开源网络库的时候需要重点关注。

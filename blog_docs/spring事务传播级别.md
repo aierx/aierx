@@ -1,8 +1,6 @@
-## spring事务传播级别
-
 > 参考文章：[数据库的4种隔离级别 - myseries - 博客园](https://www.cnblogs.com/myseries/p/10748912.html)
 
-### 1、先上一份源码
+## 1、先上一份源码
 
 ```java
 /*
@@ -119,7 +117,7 @@ public enum Propagation {
 
 ```
 
-### 2、当前服务存在A服务和B服务
+## 2、当前服务存在A服务和B服务
 
 ```java
 // 服务一
@@ -159,7 +157,7 @@ public class UserService2 {
 
 ```
 
-### 3、七种事务传播级别
+## 3、七种事务传播级别
 
 - TransactionDefinition.PROPAGATION_REQUIRED 支持当前事务，不存在创建新事务
 - TransactionDefinition.PROPAGATION_SUPPORTS 支持当前事务，不存在事务以非事务执行
@@ -169,7 +167,7 @@ public class UserService2 {
 - TransactionDefinition.PROPAGATION_NEVER 以非事务执行，如果当前存在事务抛出异常
 - TransactionDefinition.PROPAGATION_NESTED 嵌套事务，还没搞清楚
 
-### 4、需要与数据库的隔离级别区分清楚
+## 4、需要与数据库的隔离级别区分清楚
 
 - read uncommitted 读未提交，可能产生“脏读”、“不可重复读”、“幻读”
 - read committed 读已提交，可能产生“不可重复读”、“幻读”，同一个事务多次读取同一个字段，读出来的结果可能不一样。另一个事务修改数据已提交。（查询中加锁）

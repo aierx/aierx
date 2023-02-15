@@ -1,31 +1,25 @@
-## 黑苹果工具
+# 工具下载
+> [Python](https://www.python.org)
 
- #### 1.工具下载
+> [Rufus](https://rufus.ie)
 
+> [OpenCore](https://dortania.github.io/OpenCore-Install-Guide)
 
-1.[Python](https://www.python.org)
+> [opencore核心包下载](https://github.com/acidanthera/OpenCorePkg/releases)
 
-2.[Rufus](https://rufus.ie)
+> [各种机型EFI下载](https://github.com/daliansky/Hackintosh)
 
-3.[OpenCore](https://dortania.github.io/OpenCore-Install-Guide)
+> [ProperTree](https://github.com/corpnewt/ProperTree)
 
-4.[opencore核心包下載](https://github.com/acidanthera/OpenCorePkg/releases)
+> [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
 
-5.[各種機型的EFI引導文件下載](https://github.com/daliansky/Hackintosh)
+> [OpenCore Configurator](https://mackie100projects.altervista.org/opencore-configurator/)
 
-6.[ProperTree](https://github.com/corpnewt/ProperTree)
+# 下载苹果恢复系统
 
-7.[GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
-
-8.[OpenCore Configurator](https://mackie100projects.altervista.org/opencore-configurator/)
-
-#### 2.下载苹果恢复系统
-
-1. 下载opencore核心工具包
-
-2. cd /Utilities/macrecovery/
-
-3. 执行以下命令下载对应系统
+> 1. 下载opencore核心工具包  
+> 2. cd /Utilities/macrecovery/  
+> 3. 执行以下命令下载对应系统
 
 ```sh
     # Lion (10.7):
