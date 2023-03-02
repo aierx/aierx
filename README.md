@@ -5,6 +5,8 @@
 > netsh winhttp set proxy localhost:10811 \
 > set NO_AUTH_BOTO_CONFIG=C:\app\boto.cfg  \
 > echo proxy
+### windows sdk download
+`https://developer.microsoft.com/en-us/windows/downloads/`
 
 
 
