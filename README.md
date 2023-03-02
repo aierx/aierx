@@ -1,14 +1,9 @@
 > ip地址: 124.221.118.223  
-> @echo off
-> 
-> set http_proxy=http://127.0.0.1:10811
-> 
-> set http_proxy=https://127.0.0.1:10811
-> 
-> netsh winhttp set proxy localhost:10811
-> 
-> set NO_AUTH_BOTO_CONFIG=C:\app\boto.cfg
-> 
+> @echo off \
+> set http_proxy=http://127.0.0.1:10811 \
+> set http_proxy=https://127.0.0.1:10811  \
+> netsh winhttp set proxy localhost:10811 \
+> set NO_AUTH_BOTO_CONFIG=C:\app\boto.cfg  \
 > echo proxy
 
 
