@@ -20,3 +20,6 @@ REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode\Command /d "C:\Users\aleiw\AppD
 
 
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=aierx)](https://github.com/anuraghazra/github-readme-stats)
+
+gn gen --ide=vs2019 --args="is_debug=true" out\x64_vs
+ninja -C .\out\x64_vs
