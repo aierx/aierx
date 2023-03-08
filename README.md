@@ -34,5 +34,7 @@ command + option + 方向键 调整焦点 \
 command + control + 方向键 调整大小
 
 
-lsof -i:3306  查看端口占用
+lsof -i:3306  查看端口占用 \
+lsof -i:3306 | awk 'NR==1 {next} {print $2}'
+kill -9 $(lsof -t -i :3306) 杀死端口
 
