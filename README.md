@@ -24,11 +24,11 @@ REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode\Command /d "C:\Users\aleiw\AppD
 gn gen --ide=vs2019 --args="is_debug=true" out\x64_vs
 ninja -C .\out\x64_vs
 
-
-command + D 水平分屏
-command + shift + D 垂直分屏
-command + shift + i 同时输入
-command + w 关闭
-command + shift + w 全部关闭
-command + option + 方向键 调整焦点
-command + control + 方向键 调整大小
+ITerm2 快捷键 \
+command + D 水平分屏 \
+command + shift + D 垂直分屏 \
+command + shift + i 同时输入 \
+command + w 关闭 \
+command + shift + w 全部关闭 \
+command + option + 方向键 调整焦点 \
+command + control + 方向键 调整大小 \
