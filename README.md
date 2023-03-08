@@ -31,4 +31,8 @@ command + shift + i 同时输入 \
 command + w 关闭 \
 command + shift + w 全部关闭 \
 command + option + 方向键 调整焦点 \
-command + control + 方向键 调整大小 \
+command + control + 方向键 调整大小
+
+
+lsof -i:3306  查看端口占用
+
