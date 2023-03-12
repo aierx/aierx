@@ -38,3 +38,5 @@ lsof -i:3306  查看端口占用 \
 lsof -i:3306 | awk 'NR==1 {next} {print $2}'
 kill -9 $(lsof -t -i :3306) 杀死端口
 
+### 7、耗时分析
+curl -X GET -w "\nl: %{time_namelookup}\nc: %{time_connect}\ns: %{time_starttransfer}\nt: %{time_total}\n" -o a.txt  "baidu.com"
