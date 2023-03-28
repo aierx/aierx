@@ -40,3 +40,10 @@ kill -9 $(lsof -t -i :3306) 杀死端口
 
 ### 7、耗时分析
 curl -X GET -w "\nl: %{time_namelookup}\nc: %{time_connect}\ns: %{time_starttransfer}\nt: %{time_total}\n" -o a.txt  "baidu.com"
+
+
+
+
+mysql 段错误
+
+https://blog.csdn.net/ly_qiu/article/details/108061454
