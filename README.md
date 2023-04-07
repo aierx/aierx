@@ -53,3 +53,7 @@ https://blog.csdn.net/ly_qiu/article/details/108061454
 
 #### 设置没有显示器
 -Djava.awt.headless=true
+
+
+mybatis热加载 实现
+https://blog.csdn.net/lonelymanontheway/article/details/120203097
