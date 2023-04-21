@@ -45,7 +45,6 @@ curl -X GET -w "\nl: %{time_namelookup}\nc: %{time_connect}\ns: %{time_starttran
 
 
 mysql 段错误
-
 https://blog.csdn.net/ly_qiu/article/details/108061454
 
 
@@ -57,3 +56,8 @@ https://blog.csdn.net/ly_qiu/article/details/108061454
 
 mybatis热加载 实现
 https://blog.csdn.net/lonelymanontheway/article/details/120203097
+
+
+
+### tdlr 快速显示工具用法
+https://zhuanlan.zhihu.com/p/82649746
