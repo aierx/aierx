@@ -1,3 +1,4 @@
+windows设置代理
 > ip地址: 124.221.118.223  
 > @echo off \
 > set http_proxy=http://127.0.0.1:10811 \
@@ -61,3 +62,16 @@ https://blog.csdn.net/lonelymanontheway/article/details/120203097
 
 #### tdlr 快速显示工具用法
 https://zhuanlan.zhihu.com/p/82649746
+
+
+
+#### macos设置代理
+`-setsecurewebproxy` `-setwebproxy` `-setsocksfirewallproxy`
+alias s='export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0    .1:7890 & networksetup -setsocksfirewallproxy "Wi-Fi" 127.0.0.1 7890'
+alias u='unset https_proxy http_proxy all_proxy & networksetup -setsocksfirewallproxystate "Wi-Fi" off'
+
+
+#### linux设置代理
+alias s="export http_proxy=http://192.168.31.177:10809; export https_proxy=$http_proxy; echo 'HTTP Proxy on';"
+alias u="unset http_proxy; unset https_proxy; echo 'HTTP Proxy off';"
+alias c=clear
