@@ -25,8 +25,10 @@ REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode\Command /d "C:\Users\aleiw\AppD
 
 gn gen --ide=vs2019 --args="is_debug=true" out\x64_vs
 ninja -C .\out\x64_vs
-v8 ide编译
-gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true"
+### v8 ide编译
+gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true" \
+xcode 编译 \
+https://cloud.tencent.com/developer/article/1200595
 
 ITerm2 快捷键 \
 command + D 水平分屏 \
