@@ -80,3 +80,5 @@ alias u='unset https_proxy http_proxy all_proxy & networksetup -setsocksfirewall
 alias s="export http_proxy=http://192.168.31.177:10809; export https_proxy=$http_proxy; echo 'HTTP Proxy on';"
 alias u="unset http_proxy; unset https_proxy; echo 'HTTP Proxy off';"
 alias c=clear
+
+https://apiv1.v27qae.com/flydsubal/updgg33edt0gmbtn?sub=2&extend=1
