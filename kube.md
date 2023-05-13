@@ -6,6 +6,8 @@
 视频：https://www.bilibili.com/video/BV1oJ411d7Tv/?spm_id_from=333.999.0.0&vd_source=21e5cf543ff14f76876c79bf5a6a1984 \
 网络插件：https://github.com/flannel-io/flannel \
 
+对应docker版本  docker 18.09
+
 
 ```shell
 vim /etc/systemd/system/docker.service.d/proxy.conf
