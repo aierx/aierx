@@ -292,6 +292,7 @@ $ make all
 ```
 
 ## 检查编译环境，出现下面界面表示成功
+[windows教程](https://cloud.tencent.com/developer/article/1047890)
 
 ![image-20220305013306372](https://s2.loli.net/2022/03/05/Km1wpYTudMz4X5k.png)
 
