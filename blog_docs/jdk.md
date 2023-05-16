@@ -88,29 +88,6 @@ visual studio 2010
 |【JNI】符号大全|<a href="https://hg.openjdk.java.net/jdk8u/jdk8u60/jdk/file/935758609767/make/mapfiles/libnet/mapfile-vers#l29" target="_blank">/jdk/make/mapfiles/libnet/mapfile-vers#l29</a>|
 |【JNI】符号表table赋值|<a href="https://hg.openjdk.java.net/jdk8u/jdk8u60/hotspot/file/37240c1019fd/src/share/vm/runtime/thread.hpp#l988" target="_blank">/hotspot/src/share/vm/runtime/thread.hpp#l988</a>|
 
-# 编译
-
-- 系统 Ubuntu
-  编译工具链 GCC-7.3.1、GCC-C++-7.3.1、make-3.8.2
-
-  调试工具 gdb-7.6.1
-
-  构建命令 `cmake3 .. -DDOWNLOAD_BOOST=1 -DWITH_BOOST=../boost -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ -DCMAKE_C_COMPILER=/usr/local/bin/gcc`
-
-  编译命令 `cmake3 --build . --config Debug`
-
-  初始化命令 `./msyqld --defaults-file=/XXX/my.cnf --initializable --console`
-
-  启动命令 `./mysqld --defaults-file=/XXX/my.cnf &`
-
-  注册服务 `sudo ./mysqld install`
-
-- 系统 macos bigsur 11.6
-
-  编译工具链 xcode10
-
-  调试工具 lldb、clion
-
 # Ubuntu
 
 ## 安装make3.81
@@ -319,7 +296,7 @@ $ make all
 ![image-20220305013306372](https://s2.loli.net/2022/03/05/Km1wpYTudMz4X5k.png)
 
 # windows
-
+freetype 2.71  需要使用vs2010英文版编译 \
 ```bash
 $ cd /cygdrive/c/Users/aleiwe/Desktop/framework/jdk8u60/
 $ bash ./configure --with-debug-level=slowdebug --with-freetype=/cygdrive/c/freetype --disable-zip-debug-info
