@@ -297,11 +297,60 @@ $ make all
 
 # windows
 [windows教程](https://cloud.tencent.com/developer/article/1047890)
+## 1、使用vs2010英文版（一定要是英文版）
+https://freetype.org/
+freetype 2.71
+选择64位编译，lib和dll都需要编译，将编译结果输出到项目根目录中lib文件夹中
+## 2、修改下面两个文件
+- common\autoconf\generated-configure.sh
+```shell
+    if test "x$OPENJDK_TARGET_CPU" = "xx86"; then
+      if test "x$COMPILER_CPU_TEST" != "x80x86"; then
+        as_fn_error $? "Target CPU mismatch. We are building for $OPENJDK_TARGET_CPU but CL is for \"$COMPILER_CPU_TEST\"; expected \"80x86\"." "$LINENO" 5
+      fi
+    elif test "x$OPENJDK_TARGET_CPU" = "xx86_64"; then
+      if test "x$COMPILER_CPU_TEST" != "xx64"; then
+        as_fn_error $? "Target CPU mismatch. We are building for $OPENJDK_TARGET_CPU but CL is for \"$COMPILER_CPU_TEST\"; expected \"x64\"." "$LINENO" 5
+      fi
+    fi
+    
+    # 位置为21936-21944
+    if test "x$OPENJDK_TARGET_CPU" = "xx86"; then
+      if test "x$COMPILER_CPU_TEST" != "x80x86"; then
+        as_fn_error $? "Target CPU mismatch. We are building for $OPENJDK_TARGET_CPU but CL is for \"$COMPILER_CPU_TEST\"; expected \"80x86\"." "$LINENO" 5
+      fi
+    elif test "x$OPENJDK_TARGET_CPU" = "xx86_64"; then
+      if test "x$COMPILER_CPU_TEST" != "xx64"; then
+        as_fn_error $? "Target CPU mismatch. We are building for $OPENJDK_TARGET_CPU but CL is for \"$COMPILER_CPU_TEST\"; expected \"x64\"." "$LINENO" 5
+      fi
+    fi
+```
+- jdk\make\CreateJars.gmk
+```shell
+# 268行 和 282 使用vim ctrl+V - ctrl+M
+268 $(GREP) -e '\.class^M$$' $(IMAGES_OUTPUTDIR)/lib$(PROFILE)/_the.jars.contents > $@.tmp
+269         ifneq ($(PROFILE), )
+270           ifneq ($(strip $(RT_JAR_INCLUDE_TYPES)), )
+271            # Add back classes from excluded packages (fixing the $ substitution in the process)
+272             for type in $(subst \$$,\, $(RT_JAR_INCLUDE_TYPES)) ; do \
+273               $(ECHO) $$type >> $@.tmp ; \
+274             done
+275           endif
+276         endif
+277         $(MV) $@.tmp $@
+278
+279 $(IMAGES_OUTPUTDIR)/lib$(PROFILE)/_the.resources.jar.contents: $(IMAGES_OUTPUTDIR)/lib$(PROFILE)/_the.jars.contents
+280         $(MKDIR) -p $(@D)
+281         $(RM) $@ $@.tmp
+282         $(GREP) -v -e '\.class^M$$' \
+283             -e '/_the\.*' -e '^_the\.*' -e '\\_the\.*' -e 'javac_state' \
 
-freetype 2.71  需要使用vs2010英文版编译 \
+```
+
+## 3、配置JDK7和JDK8对应的JAVA_HOME环境变量，编译过程会用到，以及对应PATH路径（%JAVA_HOME%\bin和%JAVA_HOME%\lib)
+
+## 4、编译命令
 ```bash
-$ cd /cygdrive/c/Users/aleiwe/Desktop/framework/jdk8u60/
 $ bash ./configure --with-debug-level=slowdebug --with-freetype=/cygdrive/c/freetype --disable-zip-debug-info
-$ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands
-$ --with-freetype-include=/usr/include/freetype2 --with-freetype-lib=/usr/lib/x86_64-linux-gnu
+$ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands --with-freetype=/cygdrive/c/freetype/
 ```
