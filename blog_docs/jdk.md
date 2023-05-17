@@ -297,6 +297,9 @@ $ make all
 
 # windows
 [windows教程](https://cloud.tencent.com/developer/article/1047890)
+## cygwin
+![image.png](https://s2.loli.net/2023/05/17/BmM8YXafeo2rPnz.png)
+![image.png](https://s2.loli.net/2023/05/17/vRf6udY72IycXVJ.png)
 ## 1、使用vs2010英文版（一定要是英文版）
 https://freetype.org/ 
 
@@ -356,6 +359,9 @@ PATH=%JAVA_HOME%\lib;%JAVA_HOME%\bin;%PATH%
 
 ## 4、编译命令
 ```bash
-$ bash ./configure --with-debug-level=slowdebug --enable-debug-symbols --disable-zip-debug-info --with-freetype=/cygdrive/c/freetype 
-$ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands --with-freetype=/cygdrive/c/freetype/
+已编译通过命令
+./configure --with-freetype=/cygdrive/c/freetype/ --with-target-bits=64 --enable-debug
+实验中
+$ bash ./configure --with-debug-level=slowdebug --enable-debug-symbols --disable-zip-debug-info --with-freetype=/cygdrive/c/freetype OBJCOPY=gobjcopy
+$ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands
 ```
