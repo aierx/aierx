@@ -298,7 +298,8 @@ $ make all
 # windows
 [windows教程](https://cloud.tencent.com/developer/article/1047890)
 ## 1、使用vs2010英文版（一定要是英文版）
-https://freetype.org/
+https://freetype.org/ 
+
 freetype 2.71
 选择64位编译，lib和dll都需要编译，将编译结果输出到项目根目录中lib文件夹中
 ## 2、修改下面两个文件
