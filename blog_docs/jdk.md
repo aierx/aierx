@@ -350,6 +350,7 @@ freetype 2.71
 
 ## 3、配置JDK7和JDK8对应的JAVA_HOME环境变量，编译过程会用到，以及对应PATH路径（%JAVA_HOME%\bin和%JAVA_HOME%\lib)
 例如：JAVA_HOME=C:\Program Files\Java\jdk1.8.0_321
+
 PATH=%JAVA_HOME%\lib;%JAVA_HOME%\bin;%PATH%
 
 
