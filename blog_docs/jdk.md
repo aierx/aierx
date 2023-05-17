@@ -356,6 +356,6 @@ PATH=%JAVA_HOME%\lib;%JAVA_HOME%\bin;%PATH%
 
 ## 4、编译命令
 ```bash
-$ bash ./configure --with-debug-level=slowdebug --with-freetype=/cygdrive/c/freetype --disable-zip-debug-info
+$ bash ./configure --with-debug-level=slowdebug --enable-debug-symbols --disable-zip-debug-info --with-freetype=/cygdrive/c/freetype 
 $ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands --with-freetype=/cygdrive/c/freetype/
 ```
