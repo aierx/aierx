@@ -328,7 +328,7 @@ freetype 2.71
 ```
 - jdk\make\CreateJars.gmk
 ```shell
-# 268行 和 282 使用vim ctrl+V - ctrl+M
+# 268行 和 282 使用vim 在class后面和$$前面的位置输入ctrl+V - ctrl+M
 268 $(GREP) -e '\.class^M$$' $(IMAGES_OUTPUTDIR)/lib$(PROFILE)/_the.jars.contents > $@.tmp
 269         ifneq ($(PROFILE), )
 270           ifneq ($(strip $(RT_JAR_INCLUDE_TYPES)), )
