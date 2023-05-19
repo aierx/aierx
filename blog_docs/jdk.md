@@ -361,7 +361,7 @@ PATH=%JAVA_HOME%\lib;%JAVA_HOME%\bin;%PATH%
 ```bash
 已编译通过命令
 ./configure --with-freetype=/cygdrive/c/freetype/ --with-target-bits=64 --enable-debug
-实验中
+已验证[jdk8u60不能使用--disable-zip-debug-info参数，使用不带--disable-zip-debug-info的命令，生成的调试符号信息需要自己解压。][原因](https://bugs.openjdk.org/browse/JDK-8251886)
 $ bash ./configure --with-debug-level=slowdebug --enable-debug-symbols --disable-zip-debug-info --with-freetype=/cygdrive/c/freetype OBJCOPY=gobjcopy
 $ make images CONF=linux-x86_64-normal-server-fastdebug compile-commands
 ```
