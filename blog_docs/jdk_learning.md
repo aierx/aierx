@@ -5,3 +5,13 @@
 
 
 ## jdk GC对比
+
+### yong generation
+- ①、serial
+- ②、ParNew
+- ③、Parallel Scavenge
+
+### tenured genertion
+
+
+###  组合
