@@ -13,7 +13,17 @@
 
 ### tenured genertion
 - ④、CMS
-- ⑤、serial Old（MSC）
+- ⑤、Serial Old（MSC）
 - ⑥、Parallel Old
 
 ###  组合
+
+java -XX:+UseSerialGC -XX:+PrintGCDetails -version （①和⑤）
+
+java -XX:+UseParNewGC -XX:+PrintGCDetails -version （②和⑤）
+
+java -XX:+UseParallelGC -XX:+UseParallelOldGC -XX:+PrintGCDetails -version  （③和⑥、jdk8默认是开启的. -XX:+UseParallelGC -XX:+UseParallelOldGC使用一个，另外一个也会生效）
+
+java -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -version （ParNew + CMS + Serial Old收集器组合进行回收，Serial Old收集器将作为CMS收集器出现“Concurrent Mode Failure“失败后的后备收集器使用）
+
+java -XX:+UseG1GC -XX:+PrintGCDetails -version
