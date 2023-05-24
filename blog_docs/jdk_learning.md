@@ -17,6 +17,7 @@
 - ⑥、Parallel Old
 
 ###  组合
+![组合模式](https://s2.loli.net/2023/05/25/E1kShr7PD2iqY6y.png)
 
 java -XX:+UseSerialGC -XX:+PrintGCDetails -version （①和⑤）
 
