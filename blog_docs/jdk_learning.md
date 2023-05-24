@@ -12,6 +12,8 @@
 - ③、Parallel Scavenge
 
 ### tenured genertion
-
+- ④、CMS
+- ⑤、serial Old（MSC）
+- ⑥、Parallel Old
 
 ###  组合
