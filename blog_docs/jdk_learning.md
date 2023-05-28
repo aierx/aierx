@@ -33,30 +33,8 @@ java -XX:+UseG1GC -XX:+PrintGCDetails -version
 
 - java -agentlib:jdwp=help version （推荐）
 - java -Xrunjdwp:help version
-
-### 第一种可选参数
-```
-               Java Debugger JDWP Agent Library
-               --------------------------------
-
-  (see http://java.sun.com/products/jpda for more information)
-
-jdwp usage: java -agentlib:jdwp=[help]|[<option>=<value>, ...]
-
-Option Name and Value            Description                       Default
----------------------            -----------                       -------
-suspend=y|n                      wait on startup?                  y
-transport=<name>                 transport spec                    none
-address=<listen/attach address>  transport spec                    ""
-server=y|n                       listen for debugger?              n
-launch=<command line>            run debugger on event             none
-onthrow=<exception name>         debug on throw                    none
-onuncaught=y|n                   debug on any uncaught?            n
-timeout=<timeout value>          for listen/attach in milliseconds n
-mutf8=y|n                        output modified utf-8             n
-quiet=y|n
-```
-### 第二种可选参数
+- -agentlib:jdwp=transport=dt_socket,server=y,address=8000
+### 可选参数
 ```
                Java Debugger JDWP Agent Library
                --------------------------------
