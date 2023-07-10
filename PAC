@@ -1,0 +1,6 @@
+function FindProxyForURL(url, host) {
+  if (host === "sankuai.com") {
+    return "PROXY 11.45.23.0:8888";
+  }
+  return "DIRECT";
+}
