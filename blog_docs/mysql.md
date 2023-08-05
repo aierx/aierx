@@ -185,6 +185,10 @@ fn base(){
     return 1*16*1024;
 };
 
+// ------------------------cursor------------------------------
+
+u32  cursor @base() + 0x00;
+
 // ------------------------file header------------------------------
 u32 FIL_PAGE_SPACE_OR_CHKSUM            @base();
 u32 FIL_PAGE_OFFSET                     @base()+4;
