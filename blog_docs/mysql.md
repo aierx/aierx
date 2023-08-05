@@ -274,6 +274,8 @@ u64 File_Trailer                        @base()+0x4000-0x8;
 
 # undo log page header 
 
+[undolog](https://catkang.github.io/2021/10/30/mysql-undo.html)
+
 ```shell
 struct b10{
     u32 start;
