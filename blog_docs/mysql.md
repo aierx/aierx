@@ -261,4 +261,13 @@ u64 File_Trailer                        @base()+0x4000-0x8;
 | FIL_PAGE_TYPE_ZLOB_FRAG_ENTRY = 29; | 0x001f | Index pages of fragment pages (compressed LOB)      |
 
 # 行记录格式
+[row format](https://zhuanlan.zhihu.com/p/552303064)
+## record header
 ![row format](https://pic3.zhimg.com/80/v2-a75b74c85463d6718b8d251725e8c646_720w.webp)
+
+| hex  | type   |
+| ---- | ------ |
+| 0x00 | normal |
+| 0x01 | index  |
+| 0x02 | min    |
+| 0x03 | max    |
