@@ -271,3 +271,58 @@ u64 File_Trailer                        @base()+0x4000-0x8;
 | 0x01 | index  |
 | 0x02 | min    |
 | 0x03 | max    |
+
+# undo log page header 
+
+```shell
+struct b10{
+    u32 start;
+    u48 end;
+};
+
+
+struct b12{
+    u32 start;
+    u64 end;
+};
+
+struct b16{
+    u64 start;
+    u64 end;
+};
+
+fn base(){
+    return 339*16*1024;
+};
+
+// ------------------------cursor------------------------------
+
+u32  cursor @base() + 0x00;
+
+// ------------------------file header------------------------------
+u32 FIL_PAGE_SPACE_OR_CHKSUM            @base();
+u32 FIL_PAGE_OFFSET                     @base()+4;
+u32 FIL_PAGE_PREV                       @base()+4+4;
+u32 FIL_PAGE_NEXT                       @base()+4+4+4;
+u64 FIL_PAGE_LSN                        @base()+4+4+4+4;
+u16 FIL_PAGE_TYPE                       @base()+4+4+4+4+8;
+u64 FIL_PAGE_FILE_FLUSH_LSN             @base()+4+4+4+4+8+2;
+u32 FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID    @base()+4+4+4+4+8+2+8;
+
+// ------------------------undo page header------------------------------
+u16 UNDO_PAGE_TYPE                      @base()+4+4+4+4+8+2+8+4;
+u16 P_LASTED_LOG_RECORD_OFFSET          @base()+4+4+4+4+8+2+8+4+2;
+u16 FREE_SPACE_OFFSET                   @base()+4+4+4+4+8+2+8+4+2+2;
+b12 UNDO_PAGE_LIST_NODE                 @base()+4+4+4+4+8+2+8+4+2+2+2;
+
+// ------------------------undo segment header------------------------------
+
+u16 STATE                               @base()+4+4+4+4+8+2+8+4+2+2+2+12;
+u16 S_LASTED_LOG_RECORD_OFFSET          @base()+4+4+4+4+8+2+8+4+2+2+2+12+2;
+b10 UNDO_SEGMENT_FSEG_HEADER            @base()+4+4+4+4+8+2+8+4+2+2+2+12+2+2;
+b16 UNDO_SEGMENT_PAGE_LIST_BASE_NODE    @base()+4+4+4+4+8+2+8+4+2+2+2+12+2+2+10;
+
+
+// ---------------------file trailer--------------------------
+u64 File_Trailer                        @base()+0x4000-0x8;
+```
