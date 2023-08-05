@@ -167,3 +167,92 @@ $ show variables like 'long_query_time';
 
 ```
 
+
+# imhex工具可视化脚本
+```shell
+struct b10{
+    u64 start;
+    u16 end;
+};
+
+struct b13{
+    u8 start;
+    u32 middle;
+    u64 end;
+};
+
+fn base(){
+    return 1*16*1024;
+};
+
+// ------------------------file header------------------------------
+u32 FIL_PAGE_SPACE_OR_CHKSUM            @base();
+u32 FIL_PAGE_OFFSET                     @base()+4;
+u32 FIL_PAGE_PREV                       @base()+4+4;
+u32 FIL_PAGE_NEXT                       @base()+4+4+4;
+u64 FIL_PAGE_LSN                        @base()+4+4+4+4;
+u16 FIL_PAGE_TYPE                       @base()+4+4+4+4+8;
+u64 FIL_PAGE_FILE_FLUSH_LSN             @base()+4+4+4+4+8+2;
+u32 FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID    @base()+4+4+4+4+8+2+8;
+
+// ------------------------page header------------------------------
+u16 PAGE_N_DIR_SLOTS                    @base()+4+4+4+4+8+2+8+4;
+u16 PAGE_HEAP_TOP                       @base()+4+4+4+4+8+2+8+4+2;
+u16 PAGE_N_HEAP                         @base()+4+4+4+4+8+2+8+4+2+2;
+u16 PAGE_FREE                           @base()+4+4+4+4+8+2+8+4+2+2+2;
+u16 PAGE_GARBAGE                        @base()+4+4+4+4+8+2+8+4+2+2+2+2;
+u16 PAGE_LAST_INSERT                    @base()+4+4+4+4+8+2+8+4+2+2+2+2+2;
+u16 PAGE_DIRECTION                      @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2;
+u16 PAGE_N_DIRECT                       @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2;
+u16 PAGE_N_RECS                         @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2;
+u64 PAGE_MAX_TRX_ID                     @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2;
+u16 PAGE_LEVEL                          @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8;
+u64 PAGE_INDEX_ID                       @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2;
+b10 PAGE_BTR_SEG_LEAF                   @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8;
+b10 PAGE_BTR_SEG_TOP                    @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10;
+
+// ---------------------generate limit record--------------------------
+
+b13 Infimum                             @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10+10;
+b13 Supremum                            @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10+10+13;
+
+// ---------------------file trailer--------------------------
+u64 File_Trailer                        @base()+0x4000-0x8;
+```
+
+# page type
+| File page types                     | hex    | desc                                                |
+| ----------------------------------- | ------ | --------------------------------------------------- |
+| FIL_PAGE_INDEX                      | 0x45bf | B-tree node                                         |
+| FIL_PAGE_RTREE                      | 0x45be | R-tree node                                         |
+| FIL_PAGE_SDI                        | 0x45bd | Tablespace SDI Index page                           |
+| FIL_PAGE_UNDO_LOG                   | 0x0002 | Undo log page                                       |
+| FIL_PAGE_INODE                      | 0x0003 | Index node                                          |
+| FIL_PAGE_IBUF_FREE_LIST             | 0x0004 | Insert buffer free list                             |
+| FIL_PAGE_TYPE_ALLOCATED             | 0x0000 | Freshly allocated page                              |
+| FIL_PAGE_IBUF_BITMAP                | 0x0005 | Insert buffer bitmap                                |
+| FIL_PAGE_TYPE_SYS                   | 0x0006 | System page                                         |
+| FIL_PAGE_TYPE_TRX_SYS               | 0x0007 | Transaction system data                             |
+| FIL_PAGE_TYPE_FSP_HDR               | 0x0008 | File space header                                   |
+| FIL_PAGE_TYPE_XDES                  | 0x0009 | Extent descriptor page                              |
+| FIL_PAGE_TYPE_BLOB                  | 0x000a | Uncompressed BLOB page                              |
+| FIL_PAGE_TYPE_ZBLOB                 | 0x000b | First compressed BLOB page                          |
+| FIL_PAGE_TYPE_ZBLOB2                | 0x000c | Subsequent compressed BLOB page                     |
+| FIL_PAGE_TYPE_UNKNOWN               | 0x000d | it is replaced with this value when flushing pages. |
+| FIL_PAGE_COMPRESSED                 | 0x000e | Compressed page                                     |
+| FIL_PAGE_ENCRYPTED                  | 0x000f | Encrypted page                                      |
+| FIL_PAGE_COMPRESSED_AND_ENCRYPTED   | 0x0010 | Compressed and Encrypted page                       |
+| FIL_PAGE_ENCRYPTED_RTREE            | 0x0011 | Encrypted R-tree page                               |
+| FIL_PAGE_SDI_BLOB                   | 0x0012 | Uncompressed SDI BLOB page                          |
+| FIL_PAGE_SDI_ZBLOB                  | 0x0013 | Commpressed SDI BLOB page                           |
+| FIL_PAGE_TYPE_LEGACY_DBLWR          | 0x0014 | Legacy doublewrite buffer page.                     |
+| FIL_PAGE_TYPE_RSEG_ARRAY            | 0x0015 | Rollback Segment Array page                         |
+| FIL_PAGE_TYPE_LOB_INDEX             | 0x0016 | Index pages of uncompressed LOB                     |
+| FIL_PAGE_TYPE_LOB_DATA              | 0x0017 | Data pages of uncompressed LOB                      |
+| FIL_PAGE_TYPE_LOB_FIRST             | 0x0018 | The first page of an uncompressed LOB               |
+| FIL_PAGE_TYPE_ZLOB_FIRST            | 0x0019 | The first page of a compressed LOB                  |
+| FIL_PAGE_TYPE_ZLOB_DATA             | 0x001a | Data pages of compressed LOB                        |
+| FIL_PAGE_TYPE_ZLOB_INDEX            | 0x001b | Index pages of compressed LOB.                      |
+| FIL_PAGE_TYPE_ZLOB_FRAG = 28;       | 0x001c | Fragment pages of compressed LOB.                   |
+| FIL_PAGE_TYPE_ZLOB_FRAG_ENTRY = 29; | 0x001f | Index pages of fragment pages (compressed LOB)      |
+
