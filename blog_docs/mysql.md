@@ -262,6 +262,7 @@ u64 File_Trailer                        @base()+0x4000-0x8;
 
 # 行记录格式
 [row format](https://zhuanlan.zhihu.com/p/552303064)
+[table space](https://blog.51cto.com/59090939/1955122)
 ## record header
 ![row format](https://pic3.zhimg.com/80/v2-a75b74c85463d6718b8d251725e8c646_720w.webp)
 
