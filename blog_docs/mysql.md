@@ -317,6 +317,100 @@ file_trailer 	d_file_trailer 		@base()+16*1024-8;
 ```
 
 ## FIL_PAGE_INODE
+```shell
+fn base(){
+    return 2*16*1024;
+};
+
+// ------------------------cursor------------------------------
+u32  _cursor @base() + 0x00;
+
+// ------------------------file header------------------------------
+struct file_header{
+	u32 a_FIL_PAGE_SPACE_OR_CHKSUM;
+	u32 b_FIL_PAGE_OFFSET;
+	u32 c_FIL_PAGE_PREV;
+	u32 d_FIL_PAGE_NEXT;
+	u64 e_FIL_PAGE_LSN;
+	u16 f_FIL_PAGE_TYPE;
+	u64 g_FIL_PAGE_FILE_FLUSH_LSN;
+	u32 h_FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID;
+};
+// ------------------------list node for inode page list------------------------------
+
+struct lnfipl{
+	u32	a_prev_page_number;
+	u16	b_prev_offset;
+	u32	c_next_page_number;
+	u16	d_offset;
+};
+
+// ------------------------inode header------------------------------
+struct list_base_node{
+	u32	a_list_length;
+	u32	b_first_page_number;
+	u16	c_first_offset;
+	u32	d_last_page_number;
+	u16	e_last_offset;
+};
+
+struct inode_header{
+	u64  		a_fseg_id;
+	u32  		b_fseg_not_full_n_used;
+	list_base_node  c_fseg_free;
+	list_base_node  d_fseg_not_full;
+	list_base_node  e_fseg_full;
+	u32 		f_fseg_magic_n;
+	u32 i_fragment_array_entry_0;
+	u32 i_fragment_array_entry_1;
+	u32 i_fragment_array_entry_2;
+	u32 i_fragment_array_entry_3;
+	u32 i_fragment_array_entry_4;
+	u32 i_fragment_array_entry_5;
+	u32 i_fragment_array_entry_6;
+	u32 i_fragment_array_entry_7;
+	u32 i_fragment_array_entry_8;
+	u32 i_fragment_array_entry_9;
+	u32 i_fragment_array_entry_10;
+	u32 i_fragment_array_entry_11;
+	u32 i_fragment_array_entry_12;
+	u32 i_fragment_array_entry_13;
+	u32 i_fragment_array_entry_14;
+	u32 i_fragment_array_entry_15;
+	u32 i_fragment_array_entry_16;
+	u32 i_fragment_array_entry_17;
+	u32 i_fragment_array_entry_18;
+	u32 i_fragment_array_entry_19;
+	u32 i_fragment_array_entry_20;
+	u32 i_fragment_array_entry_21;
+	u32 i_fragment_array_entry_22;
+	u32 i_fragment_array_entry_23;
+	u32 i_fragment_array_entry_24;
+	u32 i_fragment_array_entry_25;
+	u32 i_fragment_array_entry_26;
+	u32 i_fragment_array_entry_27;
+	u32 i_fragment_array_entry_28;
+	u32 i_fragment_array_entry_29;
+	u32 i_fragment_array_entry_30;
+	u32 i_fragment_array_entry_31;
+};
+
+
+// ---------------------file trailer--------------------------
+struct file_trailer{
+	u64 File_Trailer;
+};
+
+// -------------------------main------------------------------
+struct main{
+	file_header;
+	lnfipl;
+	inode_header;
+	inode_header;
+};
+main a_main @base();
+file_trailer 	d_file_trailer 		@base()+16*1024-8;
+```
 
 ## FIL_PAGE_INDEX & FIL_PAGE_RTREE
 ```shell
