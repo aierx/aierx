@@ -170,58 +170,72 @@ $ show variables like 'long_query_time';
 
 # imhex工具可视化脚本
 ```shell
-struct b10{
-    u64 start;
-    u16 end;
-};
-
-struct b13{
-    u8 start;
-    u32 middle;
-    u64 end;
-};
-
 fn base(){
-    return 1*16*1024;
+    return 4*16*1024;
 };
 
 // ------------------------cursor------------------------------
-
-u32  cursor @base() + 0x00;
+u32  _cursor @base() + 0x00;
 
 // ------------------------file header------------------------------
-u32 FIL_PAGE_SPACE_OR_CHKSUM            @base();
-u32 FIL_PAGE_OFFSET                     @base()+4;
-u32 FIL_PAGE_PREV                       @base()+4+4;
-u32 FIL_PAGE_NEXT                       @base()+4+4+4;
-u64 FIL_PAGE_LSN                        @base()+4+4+4+4;
-u16 FIL_PAGE_TYPE                       @base()+4+4+4+4+8;
-u64 FIL_PAGE_FILE_FLUSH_LSN             @base()+4+4+4+4+8+2;
-u32 FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID    @base()+4+4+4+4+8+2+8;
+struct file_header{
+	u32 a_FIL_PAGE_SPACE_OR_CHKSUM;
+	u32 b_FIL_PAGE_OFFSET;
+	u32 c_FIL_PAGE_PREV;
+	u32 d_FIL_PAGE_NEXT;
+	u64 e_FIL_PAGE_LSN;
+	u16 f_FIL_PAGE_TYPE;
+	u64 g_FIL_PAGE_FILE_FLUSH_LSN;
+	u32 h_FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID;
+};
 
 // ------------------------page header------------------------------
-u16 PAGE_N_DIR_SLOTS                    @base()+4+4+4+4+8+2+8+4;
-u16 PAGE_HEAP_TOP                       @base()+4+4+4+4+8+2+8+4+2;
-u16 PAGE_N_HEAP                         @base()+4+4+4+4+8+2+8+4+2+2;
-u16 PAGE_FREE                           @base()+4+4+4+4+8+2+8+4+2+2+2;
-u16 PAGE_GARBAGE                        @base()+4+4+4+4+8+2+8+4+2+2+2+2;
-u16 PAGE_LAST_INSERT                    @base()+4+4+4+4+8+2+8+4+2+2+2+2+2;
-u16 PAGE_DIRECTION                      @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2;
-u16 PAGE_N_DIRECT                       @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2;
-u16 PAGE_N_RECS                         @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2;
-u64 PAGE_MAX_TRX_ID                     @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2;
-u16 PAGE_LEVEL                          @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8;
-u64 PAGE_INDEX_ID                       @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2;
-b10 PAGE_BTR_SEG_LEAF                   @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8;
-b10 PAGE_BTR_SEG_TOP                    @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10;
+struct b10{
+    u64 a_start;
+    u16 b_end;
+};
 
-// ---------------------generate limit record--------------------------
+struct page_header{
+	u16 a_PAGE_N_DIR_SLOTS;
+	u16 b_PAGE_HEAP_TOP;
+	u16 c_PAGE_N_HEAP;
+	u16 d_PAGE_FREE;
+	u16 e_PAGE_GARBAGE;
+	u16 f_PAGE_LAST_INSERT;
+	u16 g_PAGE_DIRECTION;
+	u16 h_PAGE_N_DIRECT;
+	u16 i_PAGE_N_RECS;
+	u64 j_PAGE_MAX_TRX_ID;
+	u16 k_PAGE_LEVEL;
+	u64 l_PAGE_INDEX_ID;
+	b10 m_PAGE_BTR_SEG_LEAF;
+	b10 n_PAGE_BTR_SEG_TOP;
+};
 
-b13 Infimum                             @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10+10;
-b13 Supremum                            @base()+4+4+4+4+8+2+8+4+2+2+2+2+2+2+2+2+2+8+2+8+10+10+13;
+
+// ---------------------system record--------------------------
+struct b13{
+    u8 a_start;
+    u32 b_middle;
+    u64 c_end;
+};
+
+struct system_record{
+	b13 a_Infimum;
+	b13 b_Supremum;
+};
 
 // ---------------------file trailer--------------------------
-u64 File_Trailer                        @base()+0x4000-0x8;
+struct file_trailer{
+	u64 File_Trailer;
+};
+
+// -------------------------main------------------------------
+file_header 	a_file_header 		@base();
+page_header 	b_page_header 		@base()+38;
+system_record 	c_system_record  	@base()+38+56;
+file_trailer 	d_file_trailer 		@base()+16*1024-8;
+
 ```
 
 # page type
