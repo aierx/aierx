@@ -168,7 +168,116 @@ $ show variables like 'long_query_time';
 ```
 
 
-# imhex工具可视化脚本
+# table space
+
+## page type
+| File page types                     | hex    | desc                                                |
+| ----------------------------------- | ------ | --------------------------------------------------- |
+| FIL_PAGE_INDEX                      | 0x45bf | B-tree node                                         |
+| FIL_PAGE_RTREE                      | 0x45be | R-tree node                                         |
+| FIL_PAGE_SDI                        | 0x45bd | Tablespace SDI Index page                           |
+| FIL_PAGE_UNDO_LOG                   | 0x0002 | Undo log page                                       |
+| FIL_PAGE_INODE                      | 0x0003 | Index node                                          |
+| FIL_PAGE_IBUF_FREE_LIST             | 0x0004 | Insert buffer free list                             |
+| FIL_PAGE_TYPE_ALLOCATED             | 0x0000 | Freshly allocated page                              |
+| FIL_PAGE_IBUF_BITMAP                | 0x0005 | Insert buffer bitmap                                |
+| FIL_PAGE_TYPE_SYS                   | 0x0006 | System page                                         |
+| FIL_PAGE_TYPE_TRX_SYS               | 0x0007 | Transaction system data                             |
+| FIL_PAGE_TYPE_FSP_HDR               | 0x0008 | File space header                                   |
+| FIL_PAGE_TYPE_XDES                  | 0x0009 | Extent descriptor page                              |
+| FIL_PAGE_TYPE_BLOB                  | 0x000a | Uncompressed BLOB page                              |
+| FIL_PAGE_TYPE_ZBLOB                 | 0x000b | First compressed BLOB page                          |
+| FIL_PAGE_TYPE_ZBLOB2                | 0x000c | Subsequent compressed BLOB page                     |
+| FIL_PAGE_TYPE_UNKNOWN               | 0x000d | it is replaced with this value when flushing pages. |
+| FIL_PAGE_COMPRESSED                 | 0x000e | Compressed page                                     |
+| FIL_PAGE_ENCRYPTED                  | 0x000f | Encrypted page                                      |
+| FIL_PAGE_COMPRESSED_AND_ENCRYPTED   | 0x0010 | Compressed and Encrypted page                       |
+| FIL_PAGE_ENCRYPTED_RTREE            | 0x0011 | Encrypted R-tree page                               |
+| FIL_PAGE_SDI_BLOB                   | 0x0012 | Uncompressed SDI BLOB page                          |
+| FIL_PAGE_SDI_ZBLOB                  | 0x0013 | Commpressed SDI BLOB page                           |
+| FIL_PAGE_TYPE_LEGACY_DBLWR          | 0x0014 | Legacy doublewrite buffer page.                     |
+| FIL_PAGE_TYPE_RSEG_ARRAY            | 0x0015 | Rollback Segment Array page                         |
+| FIL_PAGE_TYPE_LOB_INDEX             | 0x0016 | Index pages of uncompressed LOB                     |
+| FIL_PAGE_TYPE_LOB_DATA              | 0x0017 | Data pages of uncompressed LOB                      |
+| FIL_PAGE_TYPE_LOB_FIRST             | 0x0018 | The first page of an uncompressed LOB               |
+| FIL_PAGE_TYPE_ZLOB_FIRST            | 0x0019 | The first page of a compressed LOB                  |
+| FIL_PAGE_TYPE_ZLOB_DATA             | 0x001a | Data pages of compressed LOB                        |
+| FIL_PAGE_TYPE_ZLOB_INDEX            | 0x001b | Index pages of compressed LOB.                      |
+| FIL_PAGE_TYPE_ZLOB_FRAG = 28;       | 0x001c | Fragment pages of compressed LOB.                   |
+| FIL_PAGE_TYPE_ZLOB_FRAG_ENTRY = 29; | 0x001f | Index pages of fragment pages (compressed LOB)      |
+
+## FIL_PAGE_TYPE_FSP_HDR
+```shell
+fn base(){
+    return 0*16*1024;
+};
+
+// ------------------------cursor------------------------------
+u32  _cursor @base() + 0x00;
+
+// ------------------------file header------------------------------
+struct file_header{
+	u32 a_FIL_PAGE_SPACE_OR_CHKSUM;
+	u32 b_FIL_PAGE_OFFSET;
+	u32 c_FIL_PAGE_PREV;
+	u32 d_FIL_PAGE_NEXT;
+	u64 e_FIL_PAGE_LSN;
+	u16 f_FIL_PAGE_TYPE;
+	u64 g_FIL_PAGE_FILE_FLUSH_LSN;
+	u32 h_FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID;
+};
+
+// ------------------------fsp header------------------------------
+struct fsp_header{
+	u32  a_fsp_space_id;
+	u32  b_fsp_not_used;
+	u32  c_fsp_size;
+	u32  d_fsp_free_limit;
+	u32  e_fsp_space_flags;
+	u32  f_fsp_frag_n_used;
+	u128 g_fsp_free;
+	u128 h_fsp_free_frag;
+	u128 i_fsp_full_frag;
+	u64  j_fsp_seg_id;
+	u128 k_fsp_seg_inodes_full;
+	u128 l_fsp_seg_inode_free;
+};
+
+
+// ---------------------XDES Entry--------------------------
+struct xdes_flst_node{
+    u32 a_start;
+    u64 b_end;
+};
+
+struct xdes_entry{
+	u64 		a_xdes_id;
+	xdes_flst_node 	b_xdes_flst_node;
+	u32		c_xdes_state;
+	u128		d_xdes_bitmap;
+};
+
+// ---------------------file trailer--------------------------
+struct file_trailer{
+	u64 File_Trailer;
+};
+
+// -------------------------main------------------------------
+struct main{
+	file_header;
+	fsp_header;
+	xdes_entry;
+	xdes_entry;
+};
+main a_main @base();
+file_trailer 	d_file_trailer 		@base()+16*1024-8;
+```
+
+## FIL_PAGE_IBUF_BITMAP
+
+## FIL_PAGE_INODE
+
+## FIL_PAGE_INDEX & FIL_PAGE_RTREE
 ```shell
 fn base(){
     return 4*16*1024;
@@ -238,41 +347,7 @@ file_trailer 	d_file_trailer 		@base()+16*1024-8;
 
 ```
 
-# page type
-| File page types                     | hex    | desc                                                |
-| ----------------------------------- | ------ | --------------------------------------------------- |
-| FIL_PAGE_INDEX                      | 0x45bf | B-tree node                                         |
-| FIL_PAGE_RTREE                      | 0x45be | R-tree node                                         |
-| FIL_PAGE_SDI                        | 0x45bd | Tablespace SDI Index page                           |
-| FIL_PAGE_UNDO_LOG                   | 0x0002 | Undo log page                                       |
-| FIL_PAGE_INODE                      | 0x0003 | Index node                                          |
-| FIL_PAGE_IBUF_FREE_LIST             | 0x0004 | Insert buffer free list                             |
-| FIL_PAGE_TYPE_ALLOCATED             | 0x0000 | Freshly allocated page                              |
-| FIL_PAGE_IBUF_BITMAP                | 0x0005 | Insert buffer bitmap                                |
-| FIL_PAGE_TYPE_SYS                   | 0x0006 | System page                                         |
-| FIL_PAGE_TYPE_TRX_SYS               | 0x0007 | Transaction system data                             |
-| FIL_PAGE_TYPE_FSP_HDR               | 0x0008 | File space header                                   |
-| FIL_PAGE_TYPE_XDES                  | 0x0009 | Extent descriptor page                              |
-| FIL_PAGE_TYPE_BLOB                  | 0x000a | Uncompressed BLOB page                              |
-| FIL_PAGE_TYPE_ZBLOB                 | 0x000b | First compressed BLOB page                          |
-| FIL_PAGE_TYPE_ZBLOB2                | 0x000c | Subsequent compressed BLOB page                     |
-| FIL_PAGE_TYPE_UNKNOWN               | 0x000d | it is replaced with this value when flushing pages. |
-| FIL_PAGE_COMPRESSED                 | 0x000e | Compressed page                                     |
-| FIL_PAGE_ENCRYPTED                  | 0x000f | Encrypted page                                      |
-| FIL_PAGE_COMPRESSED_AND_ENCRYPTED   | 0x0010 | Compressed and Encrypted page                       |
-| FIL_PAGE_ENCRYPTED_RTREE            | 0x0011 | Encrypted R-tree page                               |
-| FIL_PAGE_SDI_BLOB                   | 0x0012 | Uncompressed SDI BLOB page                          |
-| FIL_PAGE_SDI_ZBLOB                  | 0x0013 | Commpressed SDI BLOB page                           |
-| FIL_PAGE_TYPE_LEGACY_DBLWR          | 0x0014 | Legacy doublewrite buffer page.                     |
-| FIL_PAGE_TYPE_RSEG_ARRAY            | 0x0015 | Rollback Segment Array page                         |
-| FIL_PAGE_TYPE_LOB_INDEX             | 0x0016 | Index pages of uncompressed LOB                     |
-| FIL_PAGE_TYPE_LOB_DATA              | 0x0017 | Data pages of uncompressed LOB                      |
-| FIL_PAGE_TYPE_LOB_FIRST             | 0x0018 | The first page of an uncompressed LOB               |
-| FIL_PAGE_TYPE_ZLOB_FIRST            | 0x0019 | The first page of a compressed LOB                  |
-| FIL_PAGE_TYPE_ZLOB_DATA             | 0x001a | Data pages of compressed LOB                        |
-| FIL_PAGE_TYPE_ZLOB_INDEX            | 0x001b | Index pages of compressed LOB.                      |
-| FIL_PAGE_TYPE_ZLOB_FRAG = 28;       | 0x001c | Fragment pages of compressed LOB.                   |
-| FIL_PAGE_TYPE_ZLOB_FRAG_ENTRY = 29; | 0x001f | Index pages of fragment pages (compressed LOB)      |
+
 
 # 行记录格式
 [row format](https://zhuanlan.zhihu.com/p/552303064)
