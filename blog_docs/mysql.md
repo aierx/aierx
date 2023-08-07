@@ -274,6 +274,47 @@ file_trailer 	d_file_trailer 		@base()+16*1024-8;
 ```
 
 ## FIL_PAGE_IBUF_BITMAP
+```shell
+fn base(){
+    return 1*16*1024;
+};
+
+// ------------------------cursor------------------------------
+u32  _cursor @base() + 0x00;
+
+// ------------------------file header------------------------------
+struct file_header{
+	u32 a_FIL_PAGE_SPACE_OR_CHKSUM;
+	u32 b_FIL_PAGE_OFFSET;
+	u32 c_FIL_PAGE_PREV;
+	u32 d_FIL_PAGE_NEXT;
+	u64 e_FIL_PAGE_LSN;
+	u16 f_FIL_PAGE_TYPE;
+	u64 g_FIL_PAGE_FILE_FLUSH_LSN;
+	u32 h_FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID;
+};
+
+// ------------------------ibuf bitmap list------------------------------
+struct ibuf_bitmap{
+	u16  a_free_space;
+	u8  b_buffered_flag;
+	u8  c_change_buffer_flag;
+};
+
+// ---------------------file trailer--------------------------
+struct file_trailer{
+	u64 File_Trailer;
+};
+
+// -------------------------main------------------------------
+struct main{
+	file_header;
+	ibuf_bitmap;
+	ibuf_bitmap;
+};
+main a_main @base();
+file_trailer 	d_file_trailer 		@base()+16*1024-8;
+```
 
 ## FIL_PAGE_INODE
 
