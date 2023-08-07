@@ -328,3 +328,4 @@ b16 UNDO_SEGMENT_PAGE_LIST_BASE_NODE    @base()+4+4+4+4+8+2+8+4+2+2+2+12+2+2+10;
 // ---------------------file trailer--------------------------
 u64 File_Trailer                        @base()+0x4000-0x8;
 ```
+!(表结构)[http://s3.51cto.com/wyfs02/M02/9E/28/wKiom1mMDb2Sjp1wAAG0Fgrpk8g954.jpg]
