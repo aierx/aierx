@@ -3,8 +3,172 @@
 
 wget https://repo.huaweicloud.com/apache/hadoop/core/hadoop-3.1.0/hadoop-3.1.0.tar.gz
 
+修改文件`hadoop/etc/core-site.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
+    http://www.apache.org/licenses/LICENSE-2.0
 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+	<property>
+                <name>fs.defaultFS</name>
+                <value>hdfs://127.0.0.1:9000</value>
+        </property>
+        <property>
+                <name>hadoop.tmp.dir</name>
+                <!-- 自定义 hadoop 的工作目录 -->
+                <value>/root/hadoop/tmp</value>
+        </property>
+        <property>
+                <name>hadoop.native.lib</name>
+                <!-- 禁用Hadoop的本地库 -->
+                <value>false</value>
+        </property>
+</configuration>
+```
+
+修改文件`hadoop/etc/hdfs-site.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+   <property>
+       <name>dfs.replication</name>
+       <value>1</value>
+   </property>
+
+</configuration>
+
+```
+修改文件`hadoop/etc/mapred-site.xml`
+```xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+        <property>
+                <name>mapreduce.framework.name</name>
+                <value>yarn</value>
+        </property>
+
+</configuration>
+
+```
+
+修改文件`hadoop/etc/yarn-site.xml`
+```xml
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+
+<!-- Site specific YARN configuration properties -->
+       <property>
+               <name>yarn.resourcemanager.hostname</name>
+               <value>127.0.0.1</value>
+       </property>
+       <property>
+               <name>yarn.resourcemanager.webapp.address</name>
+               <!-- yarn web 页面 -->
+               <value>0.0.0.0:8088</value>
+       </property>
+       <property>
+               <name>yarn.nodemanager.aux-services</name>
+               <!-- reducer获取数据的方式 -->
+               <value>mapreduce_shuffle</value>
+       </property>
+
+</configuration>
+```
+
+配置本机免密登入
+
+```shell
+$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+$ cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+$ chmod 0600 ~/.ssh/authorized_keys
+# 验证
+$ ssh root@127.0.0.1
+# 格式化 HDFS
+$ hdfs namenode -format
+# 启动 Hadoop
+$ ./hadoop/sbin/start-all.sh
+
+# 测试
+# 在 HDFS 上创建目录
+$ hadoop fs -mkdir /test_1/
+$ hadoop fs -ls /
+
+# 将本地文件上传到 HDFS
+$ cat asdadasdafd > a.txt
+$ hadoop fs -put a.txt /test_1/
+$ hadoop fs -ls /test_1/
+$ hadoop fs -cat /test_1/a.txt
+
+# 将 HDFS 上的文件下载到本地
+$ rm -fr a.txt
+$ hadoop fs -get /test_1/a.txt
+```
+网页访问Hadoop Web
+http://192.168.207.128:9870
+网页访问Yarn Web 页面测试
+http://192.168.207.128:8088
 ## hive 安装
 
 wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz
