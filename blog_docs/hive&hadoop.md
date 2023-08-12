@@ -217,6 +217,12 @@ wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.t
         <name>javax.jdo.option.ConnectionPassword</name>
         <value>123456</value>
     </property>
+
+    <!-- 这里一定要是设置为true，不然后面drop table会出现卡住的情况 -->
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>true</value>
+    </property>
     <!-- 控制Hive元数据存储的数据模型的自动创建 -->
     <property>
         <name>datanucleus.schema.autoCreateAll</name>
@@ -235,38 +241,26 @@ wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.t
     <!-- 配置Hive Server2 WebUI的主机地址,提供了一个Web界面，用于监视和管理Hive服务 -->
     <property>
         <name>hive.server2.webui.host</name>
-        <value>node001</value>
+        <value>192.168.207.128</value>
     </property>
     <!-- 配置Hive Server2 WebUI的端口号 -->
     <property>
         <name>hive.server2.webui.port</name>
         <value>10002</value>
     </property>
-    <!-- Hive元数据存储的模式验证 -->
-    <property>
-        <name>hive.metastore.schema.verification</name>
-        <value>false</value>
-    </property>
+    <!-- metastore数据存储位置 -->
+    <!-- <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/hive/warehouse</value>
+    </property> -->
      <!-- Hive元数据事件通知的认证方式 -->
     <property>
         <name>hive.metastore.event.db.notification.api.auth</name>
         <value>false</value>
     </property>
     <property>
-        <!--hive 表数据在 HDFS 的默认位置。创建内部表时，如果不指定 location，表数据则存储与该位置。-->
-        <name>hive.metastore.warehouse.dir</name>
-        <value>/hive/warehouse/internal</value>
-    </property>
-
-    <property>
-        <!--hive 外部表数据在 HDFS 的默认位置。创建外部表时，如果不指定 location，表数据则存储与该位置。-->
-        <name>hive.metastore.warehouse.external.dir</name>
-        <value>/hive/warehouse/external</value>
-    </property>
-
-    <property>
-        <name>hive.server2.enable.doAs</name>
-        <value>false</value>
+        <name>fs.defaultFS</name>   <!-- HDFS 的默认文件系统 URL -->
+        <value>hdfs://alei:9000</value>
     </property>
 </configuration>
 ```
