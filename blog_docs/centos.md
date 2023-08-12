@@ -74,7 +74,10 @@ $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.cloud.tencent.com/rep
 $ yum clean all
 $ yum makecache
 # 安装常用工具
-$ yum install wget vim unzip epel-release -y
+$ yum install wget vim unzip epel-release git -y
+
+$ yum grouplist
+$ yum install -y "Development Tools"
 ```
 
 # 防火墙相关配置
