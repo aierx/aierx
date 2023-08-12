@@ -165,10 +165,15 @@ $ hadoop fs -cat /test_1/a.txt
 $ rm -fr a.txt
 $ hadoop fs -get /test_1/a.txt
 ```
+
 网页访问Hadoop Web
+
 http://192.168.207.128:9870
+
 网页访问Yarn Web 页面测试
+
 http://192.168.207.128:8088
+
 ## hive 安装
 
 wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz
