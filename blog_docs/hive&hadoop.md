@@ -51,11 +51,6 @@ wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.t
         <name>hive.server2.webui.port</name>
         <value>10002</value>
     </property>
-    <!-- metastore数据存储位置 -->
-    <property>
-        <name>hive.metastore.warehouse.dir</name>
-        <value>/hive/warehouse</value>
-    </property>
     <!-- Hive元数据存储的模式验证 -->
     <property>
         <name>hive.metastore.schema.verification</name>
@@ -64,6 +59,22 @@ wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.t
      <!-- Hive元数据事件通知的认证方式 -->
     <property>
         <name>hive.metastore.event.db.notification.api.auth</name>
+        <value>false</value>
+    </property>
+    <property>
+        <!--hive 表数据在 HDFS 的默认位置。创建内部表时，如果不指定 location，表数据则存储与该位置。-->
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/hive/warehouse/internal</value>
+    </property>
+
+    <property>
+        <!--hive 外部表数据在 HDFS 的默认位置。创建外部表时，如果不指定 location，表数据则存储与该位置。-->
+        <name>hive.metastore.warehouse.external.dir</name>
+        <value>/hive/warehouse/external</value>
+    </property>
+
+    <property>
+        <name>hive.server2.enable.doAs</name>
         <value>false</value>
     </property>
 </configuration>
