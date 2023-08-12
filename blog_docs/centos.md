@@ -77,7 +77,7 @@ $ yum makecache
 $ yum install wget vim unzip epel-release git zhs tmux ranger -y
 
 $ yum grouplist
-$ yum install -y "Development Tools"
+$ yum groupinstall -y "Development Tools"
 ```
 
 # 防火墙相关配置
