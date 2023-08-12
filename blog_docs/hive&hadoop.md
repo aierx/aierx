@@ -1,6 +1,6 @@
 
 ## hadoop 安装
-
+[hadoop安装](https://www.jianshu.com/p/4144205d1469)
 wget https://repo.huaweicloud.com/apache/hadoop/core/hadoop-3.1.0/hadoop-3.1.0.tar.gz
 
 修改文件`hadoop/etc/core-site.xml`
