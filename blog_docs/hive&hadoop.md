@@ -38,6 +38,14 @@ wget https://repo.huaweicloud.com/apache/hadoop/core/hadoop-3.1.0/hadoop-3.1.0.t
                 <!-- 禁用Hadoop的本地库 -->
                 <value>false</value>
         </property>
+        <property>
+        <name>hadoop.proxyuser.root.hosts</name>
+                <value>*</value>
+        </property>
+        <property>
+        <name>hadoop.proxyuser.root.groups</name>
+                <value>*</value>
+        </property>
 </configuration>
 ```
 
@@ -349,6 +357,9 @@ $ start-all.sh
 # 方式一 client jdbc/odbc hive server
 $ hive --service metastore
 $ hive --service hiveserver2
+
+# 使用beeline登入
+$ beeline -u jdbc:hive2://127.0.0.1:10000 -n root
 
 # 方式二 命令行 + hive 副本
 $ hive --service cli
