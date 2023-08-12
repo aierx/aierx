@@ -1,5 +1,12 @@
 
+## hadoop 安装
+
+wget https://repo.huaweicloud.com/apache/hadoop/core/hadoop-3.1.0/hadoop-3.1.0.tar.gz
+
+
+
 ## hive 安装
+
 wget https://repo.huaweicloud.com/apache/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz
 
 修改文件`hive/conf/hive-site.xml`
@@ -161,9 +168,23 @@ export PATH=$PATH:$HIVE_HOME/bin
 export HADOOP_HOME="/root/hadoop"
 export PATH=$PATH:$HADOOP_HOME/bin
 ```
+初始化元数据库 & 启动hadoop & 启动hive
+```shell
+# 初始化元数据库
+$ schematool -initSchema -dbType mysql
 
+# 启动hadoop
+$ jps -l | grep hadoop
+$ start-all.sh
+# 启动hive
+# 方式一 client jdbc/odbc hive server
+$ hive --service metastore
+$ hive --service hiveserver2
 
-## hadoop 安装
+# 方式二 命令行 + hive 副本
+$ hive --service cli
 
-wget https://repo.huaweicloud.com/apache/hadoop/core/hadoop-3.1.0/hadoop-3.1.0.tar.gz
+# 方式三 wui
+$ hive --service hwi
+```
 
