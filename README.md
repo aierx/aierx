@@ -87,5 +87,6 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
 #### postgresql 编译
 ./configure --enable-debug --enable-cassert --prefix=/usr/local/pgsql CFLAGS=-O0
 
+pg_ctl -D pgdata -l ./pg.log start
 
-psql -U hangzhou -d hzdb
+psql -U leiwenyong -d postgres
