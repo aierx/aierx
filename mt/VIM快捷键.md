@@ -1,7 +1,7 @@
 # VIM快捷键
 
 ### 修改配置后 立即更新
-
+![](https://raw.githubusercontent.com/aierx/images/master/1f7c1c354603aae6dd6d573db540d4dc179593.png)
 :so
 
 ### config .vimrc
