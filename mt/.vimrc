@@ -67,6 +67,7 @@ set shiftwidth=4
 set backspace=indent,eol,start
 set cursorline
 set clipboard=unnamed
+set vb t_vb=
 
 " ycm
 " 设置在下面几种格式的文件上屏蔽ycm
