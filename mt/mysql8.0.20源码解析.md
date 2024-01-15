@@ -4,47 +4,47 @@
 
 ## 一、编译
 
-### 1、环境
+### 1、环境准备
 
 #### 1.1、macos
 
 - xcode12 xcode-select version 2396.
-
 - 系统：macos ventura 13.2.1
-
 - clang Apple clang version 14.0.0 (clang-1400.0.29.202)
-
 - lldb lldb-1400.0.38.17
-
 - cmake version 3.25.2
-
 - [mysql-8.0.20](https://downloads.mysql.com/archives/community/)
 
 ### 1.2、centos
 
 - cmake3
-
 - gcc 7.5
 
 ```shell
-
-ln -s /usr/local/bin/gcc /usr/bin/cc
-
-ln -s /usr/local/bin/g++ /usr/bin/c++
-
 yum -y install ncurses-devel
-
+ln -s /usr/local/bin/gcc /usr/bin/cc
+ln -s /usr/local/bin/g++ /usr/bin/c++
 ln -s /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
-
 增加sys/sycall.h
-
 修改os_compare_and_swap_thread_id->os_compare_and_swap_lint
-
 ```
 
 #### 1.3、windows
 
-#### 1.4、ubuntu
+#### 1.4、ubuntu 18.04
+![ubuntu 18.04](https://raw.githubusercontent.com/aierx/images/master/20240115202640.png)
+
+```shell
+sudo apt install cmake
+sudo apt-get install build-essential
+
+wget https://www.openssl.org/source/openssl-1.1.1k.tar.gz --no-check-certificate
+tar -zxvf openssl-1.1.1k.tar.gz
+cd openssl-1.1.1k
+make -j 8 && make install
+apt install libncurses5-dev pkg-config
+```
+
 
 ### 2、下载源代码
 
@@ -292,45 +292,25 @@ dict_index_t *clust_index; // 聚蔟索引（主键索引）
 mysql通过如下的迭代器，完成复杂语句的查询任务：
 
 - TableScanIterator：顺序扫描，调用存储引擎接口ha_rnd_next获取一行记录。
-
 - IndexScanIterator：全量索引扫描，根据扫描顺序，分别调用ha_index_next或者ha_index_prev来获取一行记录。
-
 - IndexRangeScanIterator：范围索引扫描，包装了下QUICK_SELECT_I，调用QUICK_SELECT_I::get_next来获取一行记录。
-
 - SortingIterator：对另一个迭代器输出进行排序。
-
 - SortBufferIterator：从缓冲区读取已经排好序的结果集，(主要给SortingIterator调用)
-
 - SortBufferIndirectIterator：从缓冲区读取行ID然后从表中读取对应的行（由SortingIterator和某些形式的unique操作使用）
-
 - SortFileIterator：从文件中读取已经排好序的结果集(主要给SortingIterator调用)
-
 - SortFileIndirectIterator：从文件读取行ID然后从表中读取对应的行（由SortingIterator和某些形式的unique操作使用）
-
 - RefIterator：从连接右表中读取指定key的行。
-
 - RefOrNullIterator：从连接右表中读取指定key或者为NULL的行。
-
 - EQRefIterator：使用唯一key来从连接的右表中读取行。
-
 - ConstIterator：从一个只可能匹配出一行的表(Const Table)中读取一行数据。
-
 - FullTextSearchIterator：使用全文检索索引读取一行数据。
-
 - DynamicRangeIterator：为每一行调用范围优化器，然后根据需要包装QUICK_SELECT_I或表扫描。
-
 - PushedJoinRefIterator:读取已下推到NDB的连接的输出。
-
 - FilterIterator: 读取一系列行，输出符合条件的行，用来实现WHERE/HAVING。
-
 - LimitOffsetIterator: 从offset开始读取行，直到满足limit限制，用来实现LIMIT/OFFSET。
-
 - AggregateIterator: 实现聚集函数并且如果需要的话进行分组操作。
-
 - NestedLoopiterator: 使用嵌套循环算法连接两个迭代器（内连接，外连接或反连接）。
-
 - MaterializeIterator: 从另一个迭代器读取结果，并放入临时表，然后读取临时表记录。
-
 - FakeSingleRowIterator: 返回单行，然后结束。 仅在某些使用const表情况下才使用（例如只有const表，仍然需要一个迭代器来读取该单行）
 
 ##### 4.1、group by语句处理流程
