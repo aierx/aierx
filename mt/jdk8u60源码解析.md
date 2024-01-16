@@ -32,6 +32,7 @@ git clone https://github.com/openjdk/jdk17u
 ```shell
 apt-get install mercurial 
 sudo apt install unzip zip
+sudo apt install build-essential
 sudo apt install openjdk-8-jdk
 sudo apt-get install libx11-dev libxext-dev libxrender-dev libxtst-dev libxt-dev
 sudo apt-get install libcups2-dev
