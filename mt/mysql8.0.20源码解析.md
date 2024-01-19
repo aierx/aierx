@@ -13,7 +13,11 @@
 - clang Apple clang version 14.0.0 (clang-1400.0.29.202)
 - lldb lldb-1400.0.38.17
 - cmake version 3.25.2
-- [mysql-8.0.20](https://downloads.mysql.com/archives/community/)
+- [mysql-8.0.20](https://downloads.mysql.com/archives/community/) \
+
+更新系统 Sonoma 14.1
+
+![macos](https://raw.githubusercontent.com/aierx/images/master/202401190953583.png)
 
 ### 1.2、centos
 
