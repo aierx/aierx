@@ -36,6 +36,8 @@ dbeaver 数据库工具 https://dbeaver.io/
 
 imhex 二进制文件查看工具 https://imhex.werwolv.net/
 
- Karabiner-Elements 按键映射https://karabiner-elements.pqrs.org/
+Karabiner-Elements 按键映射https://karabiner-elements.pqrs.org/
 
 scrcpy 安卓手机投屏软件 https://github.com/Genymobile/scrcpy
+
+fig 命令行提示工具  https://fig.io/
