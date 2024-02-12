@@ -21,7 +21,7 @@ xcode 4.6.1
 cygwin & visual studio 2010 & freetype 2.7D
 
 # jdk8u60
-apt-get install mercurial 
+apt install mercurial 
 hg clone https://hg.openjdk.java.net/jdk8u/jdk8u60/ 
 # 17u gcc7 
 git clone https://github.com/openjdk/jdk17u
@@ -30,18 +30,18 @@ git clone https://github.com/openjdk/jdk17u
 ### 2、Ubuntu 18.04
 
 ```shell
-apt-get install mercurial 
+apt install mercurial 
 sudo apt install unzip zip
 sudo apt install build-essential
 sudo apt install openjdk-8-jdk
-sudo apt-get install libx11-dev libxext-dev libxrender-dev libxtst-dev libxt-dev
-sudo apt-get install libcups2-dev
-sudo apt-get install libfreetype6-dev
-sudo apt-get install libasound2-dev
-sudo apt-get install autoconf
+sudo apt install libx11-dev libxext-dev libxrender-dev libxtst-dev libxt-dev
+sudo apt install libcups2-dev
+sudo apt install libfreetype6-dev
+sudo apt install libasound2-dev
+sudo apt install autoconf
 # 默认gcc是7.5 jdk8u60需要的jdk版本是gcc4.5
 # 安装指定版本gcc和g++ 
-sudo apt-get install gcc-4.8 g++-4.8 -y 
+sudo apt install gcc-4.8 g++-4.8 -y 
 # 删除软链
 sudo rm -fr /usr/bin/gcc
 sudo rm -fr /usr/bin/g++
