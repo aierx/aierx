@@ -25,7 +25,7 @@ apt install mercurial
 hg clone https://hg.openjdk.java.net/jdk8u/jdk8u60/ 
 # 17u gcc7 
 git clone https://github.com/openjdk/jdk17u
-#  ccache
+#  ccache 3.1.14
 https://blog.csdn.net/weixin_45875127/article/details/113307449
 ```
 
