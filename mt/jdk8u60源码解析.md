@@ -30,7 +30,7 @@ git clone https://github.com/openjdk/jdk17u
 ### 2、Ubuntu 18.04
 
 ```shell
-apt install mercurial 
+sudo apt install mercurial 
 sudo apt install unzip zip
 sudo apt install build-essential
 sudo apt install openjdk-8-jdk
