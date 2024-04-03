@@ -1,36 +1,245 @@
+> 参考文章 [一文弄懂Java日志框架](https://blog.csdn.net/zyb18507175502/article/details/131617841)
 
+## 一、logback
 
-log4j2.xml
+### 1、vm参数
+
+-Dlogback.configurationFile=http://localhost:8000/logback.xml 从指定位置获取配置
+
+### 2、默认配置文件名称及顺序
+
+logback-test.xml -> logback.groovy -> logback.xml
+
+### 3、依赖
+```xml
+<!--slf4j core 使用slf4j必須添加-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!--    logback    -->
+<dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>1.2.3</version>
+</dependency>
+```
+
+### 4、示例代码
+
+```java
+Logger logger = LoggerFactory.getLogger(Main.class);
+logger.trace("trace");
+logger.debug("debug");
+logger.info("info");
+logger.warn("warn");
+logger.error("error");
+```
+
+### 5、配置文件
+
+## 二、log4j
+
+### 1、vm参数
+
+-Dlog4j.defaultInitOverride 设置log4j不进行初始化，由后续手动初始化
+
+-Dlog4j.configuration=http://localhost:8000/log4j.xml 从指定位置获取配置
+
+### 2、默认配置文件及顺序
+
+log4j.xml -> log4j.properties
+
+### 3、依赖
 
 ```xml
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.9.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.9.1</version>
-        </dependency>
+<!--slf4j core 使用slf4j必須添加-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!-- log4j-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-log4j12</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!--适配log4j-->
+<dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.17</version>
+</dependency>
 
 ```
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration status="OFF">
-    <appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <!--<PatternLayout pattern="%d %-5level [%t] %c{1.}.%M(%L): %msg%n"/>-->
-            <PatternLayout pattern="%d %highlight{%-5level} [%20.20t] %style{%c{1.}.%M:%L}{cyan} %msg%n"/>
-        </Console>
-    </appenders>
-    <loggers>
-        <root level="info">
-            <appender-ref ref="Console"/>
-        </root>
-    </loggers>
-</configuration>
+### 4、示例代码
 
-
+```java
+Logger logger = LoggerFactory.getLogger(Main.class);
+logger.trace("trace");
+logger.debug("debug");
+logger.info("info");
+logger.warn("warn");
+logger.error("error");
 ```
+
+### 5、配置文件
+
+## 三、 log4j2 
+
+`StrSubstitutor 作用 待学习`
+
+`配置初始化位置-默认 org.apache.logging.log4j.core.LoggerContext.configuration`
+
+`重新config        org.apache.logging.log4j.core.LoggerContext.reconfigure()`
+
+### 1、vm参数
+
+-Dlog4j.configurationFile=http://localhost:8000/log4j2.xml 从指定位置获取配置
+
+### 2、默认配置文件及顺序
+
+配置文件组成由： 文件名称 + 文件后缀 
+
+- 文件名称顺序 ( test + name -> test + no name -> no test + name -> no test + no name)
+
+    test + name         示例：`log4j2-test18b4aac2`
+    
+    test + no name      示例：`log4j2-test`
+    
+    no test + name      示例：`log4j218b4aac2`
+    
+    no test + no name   示例：`log4j2`
+
+- 文件后缀顺序 ( [".properties"] -> [".yml", ".yaml"] -> [".json", ".jsn"] -> [".xml", "*"] )
+
+
+### 3、使用自己的门面
+
+#### （1）、依赖
+```xml
+<!-- Log4j2 门面API-->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.11.1</version>
+</dependency>
+<!-- Log4j2 日志实现 -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.11.1</version>
+</dependency>
+```
+
+#### （2）、示例代码
+
+```java
+Logger logger = LogManager.getLogger();
+logger.trace("trace");
+logger.debug("debug");
+logger.info("info");
+logger.warn("warn");
+logger.error("error");
+```
+
+
+### 4、使用slf4j的门面
+
+#### （1）、依赖
+
+```xml
+<!-- Log4j2 门面API-->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.11.1</version>
+</dependency>
+<!-- Log4j2 日志实现 -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.11.1</version>
+</dependency>
+<!--为slf4j绑定日志实现 log4j2的适配器 -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-slf4j-impl</artifactId>
+    <version>2.10.0</version>
+</dependency>
+```
+
+#### （2）、示例代码
+
+```java
+Logger logger = LoggerFactory.getLogger(Main.class);
+logger.trace("trace");
+logger.debug("debug");
+logger.info("info");
+logger.warn("warn");
+logger.error("error");
+```
+
+### 5、配置文件
+
+## 四、其他slf4j日志框架实现
+
+```xml
+<!--slf4j core 使用slf4j必須添加-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!-- jul -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-jdk14</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!--jcl -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-jcl</artifactId>
+    <version>1.7.27</version>
+</dependency>
+<!-- nop 日志开关-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-nop</artifactId>
+    <version>1.7.27</version>
+</dependency>
+```
+
+## 五、将现有日志框架使用slf4j
+
+```xml
+<!-- log4j-->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>log4j-over-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+
+<!-- jul -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jul-to-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+
+<!--jcl -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jcl-over-slf4j</artifactId>
+    <version>1.7.27</version>
+</dependency>
+```
+
+- jcl-over-slf4j.jar和 slf4j-jcl.jar不能同时部署。前一个jar文件将导致JCL将日志系统的选择委托给SLF4J，后一个jar文件将导致SLF4J将日志系统的选择委托给JCL，从而导致无限循环。
+- log4j-over-slf4j.jar和slf4j-log4j12.jar不能同时出现(桥接器和适配器不能同时出现)
+- jul-to-slf4j.jar和slf4j-jdk14.jar不能同时出现
+- 所有的桥接都只对Logger日志记录器对象有效，如果程序中调用了内部的配置类或者是Appender,Filter等对象，将无法产生效果。
