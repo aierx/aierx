@@ -1,4 +1,7 @@
-> 参考文章 [一文弄懂Java日志框架](https://blog.csdn.net/zyb18507175502/article/details/131617841)
+> [一文弄懂Java日志框架](https://blog.csdn.net/zyb18507175502/article/details/131617841) \
+> [Unicode字符列表 - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%88%97%E8%A1%A8)\
+> [ANSI转义序列 - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97#24%E4%BD%8D)\
+> [基于ANSI转义序列来构建命令行工具 – 小居](https://liunian.info/commandline-with-ansi-escape-codes.html)
 
 ## 一、logback
 
@@ -243,3 +246,42 @@ logger.error("error");
 - log4j-over-slf4j.jar和slf4j-log4j12.jar不能同时出现(桥接器和适配器不能同时出现)
 - jul-to-slf4j.jar和slf4j-jdk14.jar不能同时出现
 - 所有的桥接都只对Logger日志记录器对象有效，如果程序中调用了内部的配置类或者是Appender,Filter等对象，将无法产生效果。
+
+# 六、 JUL日志框架
+
+默认配置文件位置 jre/lib/logging.properties
+通过vm参数可以指定配置文件位置(只能是文件位置)：-Djava.util.logging.config.
+file=C:\Users\aleiwe\Desktop\tutorials\log\src\main\resources\logging.
+properties
+
+# 七、ANSI控制字符
+- 前景色
+  - \u001b[?m，其中 ? ∈ [30, 37]。 
+  - \u001b[?;1m，其中 ? ∈ [30, 37]。
+  - \u001b[38;5;?m，其中 ? ∈ [0, 255]
+- 背景色
+  - \u001b[?m，其中 ? ∈ [40, 47]。 
+  - \u001b[?;1m，其中 ? ∈ [40, 47]。
+  - \u001b[48;5;?m，其中 ? ∈ [0, 255]
+- 加粗加亮：\u001b[1m
+- 降低亮度：\u001b[2m
+- 斜体：\u001b[3m
+- 下划线：\u001b[4m
+- 反色：\u001b[7m
+- 光标操作
+  - 上：\u001b[{n}A，光标上移 n 行
+  - 下：\u001b[{n}B，光标下移 n 行
+  - 右：\u001b[{n}C，光标右移 n 个位置
+  - 左：\u001b[{n}D，光标左移 n 个位置
+  - 下几行行首：\u001b[{n}E
+  - 上几行行首：\u001b[{n}F
+  - 指定列：\u001b[{n}G
+  - 指定位置：\u001b[{n};{m}H，移动光标到 n 行 m 列
+  - 清屏：\u001b[{n}J
+    - n=0，当前光标到屏末
+    - n=1，当前光标到屏首
+    - n=2，整屏
+  - 清行：\u001b[{n}K
+    - n=0，当前光标到行末
+    - n=1，当前光标到行首
+    - n=2，整行
