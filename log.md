@@ -5,6 +5,8 @@
 
 ## 一、logback
 
+`设置layout位置 ch.qos.logback.core.pattern.PatternLayoutBase#setPattern`
+
 ### 1、vm参数
 
 -Dlogback.configurationFile=http://localhost:8000/logback.xml 从指定位置获取配置
@@ -41,6 +43,24 @@ logger.error("error");
 ```
 
 ### 5、配置文件
+支持ansi输出，配置文件名称：`logback.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <conversionRule conversionWord="nanos" converterClass="org.example.MySampleConverter" />
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%5p) [%15.15t] %cyan(%40.40c{10}:%-4L): %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
+```
 
 ## 二、log4j
 
@@ -90,6 +110,24 @@ logger.error("error");
 ```
 
 ### 5、配置文件
+不支持ansi颜色输出，配置文件名称：`log4j.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration debug="false" >
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5.5p [%15.15t] %40.40c{10}:%-4.4L: %m%n"/>
+        </layout>
+    </appender>
+    <root>
+        <priority value ="info"/>
+        <appender-ref ref="console"/>
+    </root>
+</log4j:configuration>
+```
 
 ## 三、 log4j2 
 
@@ -187,6 +225,23 @@ logger.error("error");
 ```
 
 ### 5、配置文件
+支持ansi输出，需要指定`-Dlog4j.skipJansi=false`,默认配置文件名称：`log4j2.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="org.apache.log4j.ConsoleAppender">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5.5p} [%15.15t] %style{%40.40c{1.}:%-4L}{cyan}: %msg%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
+```
 
 ## 四、其他slf4j日志框架实现
 
