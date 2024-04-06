@@ -17,29 +17,39 @@ logback-test.xml -> logback.groovy -> logback.xml
 
 ### 3、依赖
 ```xml
-<!--slf4j core 使用slf4j必須添加-->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.27</version>
-</dependency>
-<!--    logback    -->
-<dependency>
+<dependencys>
+    <!--slf4j core 使用slf4j必須添加-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.27</version>
+    </dependency>
+            <!--    logback    -->
+    <dependency>
     <groupId>ch.qos.logback</groupId>
     <artifactId>logback-classic</artifactId>
     <version>1.2.3</version>
-</dependency>
+    </dependency>
+</dependencys>
+
 ```
 
 ### 4、示例代码
 
 ```java
-Logger logger = LoggerFactory.getLogger(Main.class);
-logger.trace("trace");
-logger.debug("debug");
-logger.info("info");
-logger.warn("warn");
-logger.error("error");
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Main {
+  public static void main(String[] args) {
+    Logger logger = LoggerFactory.getLogger(Main.class);
+    logger.trace("trace");
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+  }
+}
 ```
 
 ### 5、配置文件
@@ -77,36 +87,44 @@ log4j.xml -> log4j.properties
 ### 3、依赖
 
 ```xml
-<!--slf4j core 使用slf4j必須添加-->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.27</version>
-</dependency>
-<!-- log4j-->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-log4j12</artifactId>
-    <version>1.7.27</version>
-</dependency>
-<!--适配log4j-->
-<dependency>
-    <groupId>log4j</groupId>
-    <artifactId>log4j</artifactId>
-    <version>1.2.17</version>
-</dependency>
-
+<dependencys>
+    <!--slf4j core 使用slf4j必須添加-->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.27</version>
+    </dependency>
+    <!-- log4j-->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.27</version>
+    </dependency>
+    <!--适配log4j-->
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+</dependencys>
 ```
 
 ### 4、示例代码
 
 ```java
-Logger logger = LoggerFactory.getLogger(Main.class);
-logger.trace("trace");
-logger.debug("debug");
-logger.info("info");
-logger.warn("warn");
-logger.error("error");
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Main {
+  public static void main(String[] args) {
+    Logger logger = LoggerFactory.getLogger(Main.class);
+    logger.trace("trace");
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+  }
+}
 ```
 
 ### 5、配置文件
@@ -129,7 +147,7 @@ logger.error("error");
 </log4j:configuration>
 ```
 
-## 三、 log4j2 
+## 三、 log4j2
 
 `StrSubstitutor 作用 待学习`
 
@@ -143,17 +161,17 @@ logger.error("error");
 
 ### 2、默认配置文件及顺序
 
-配置文件组成由： 文件名称 + 文件后缀 
+配置文件组成由： 文件名称 + 文件后缀
 
 - 文件名称顺序 ( test + name -> test + no name -> no test + name -> no test + no name)
 
-    test + name         示例：`log4j2-test18b4aac2`
-    
-    test + no name      示例：`log4j2-test`
-    
-    no test + name      示例：`log4j218b4aac2`
-    
-    no test + no name   示例：`log4j2`
+  test + name         示例：`log4j2-test18b4aac2`
+
+  test + no name      示例：`log4j2-test`
+
+  no test + name      示例：`log4j218b4aac2`
+
+  no test + no name   示例：`log4j2`
 
 - 文件后缀顺序 ( [".properties"] -> [".yml", ".yaml"] -> [".json", ".jsn"] -> [".xml", "*"] )
 
@@ -162,29 +180,40 @@ logger.error("error");
 
 #### （1）、依赖
 ```xml
-<!-- Log4j2 门面API-->
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-api</artifactId>
-    <version>2.11.1</version>
-</dependency>
-<!-- Log4j2 日志实现 -->
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-core</artifactId>
-    <version>2.11.1</version>
-</dependency>
+<dependencys>
+    <!-- Log4j2 门面API-->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.11.1</version>
+    </dependency>
+    <!-- Log4j2 日志实现 -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.11.1</version>
+    </dependency>
+</dependencys>
+
 ```
 
 #### （2）、示例代码
 
 ```java
-Logger logger = LogManager.getLogger();
-logger.trace("trace");
-logger.debug("debug");
-logger.info("info");
-logger.warn("warn");
-logger.error("error");
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class Log4j2 {
+  public static void main(String[] args) {
+    Logger logger = LogManager.getLogger();
+    logger.trace("trace");
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+  }
+}
+
 ```
 
 
@@ -193,35 +222,46 @@ logger.error("error");
 #### （1）、依赖
 
 ```xml
-<!-- Log4j2 门面API-->
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-api</artifactId>
-    <version>2.11.1</version>
-</dependency>
-<!-- Log4j2 日志实现 -->
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-core</artifactId>
-    <version>2.11.1</version>
-</dependency>
-<!--为slf4j绑定日志实现 log4j2的适配器 -->
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-slf4j-impl</artifactId>
-    <version>2.10.0</version>
-</dependency>
+<dependencys>
+    <!-- Log4j2 门面API-->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.11.1</version>
+    </dependency>
+    <!-- Log4j2 日志实现 -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.11.1</version>
+    </dependency>
+    <!--为slf4j绑定日志实现 log4j2的适配器 -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>2.10.0</version>
+    </dependency>
+</dependencys>
+
 ```
 
 #### （2）、示例代码
 
 ```java
-Logger logger = LoggerFactory.getLogger(Main.class);
-logger.trace("trace");
-logger.debug("debug");
-logger.info("info");
-logger.warn("warn");
-logger.error("error");
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+public class Log4j2 {
+  public static void main(String[] args) {
+    Logger logger = LogManager.getLogger();
+    logger.trace("trace");
+    logger.debug("debug");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+  }
+}
 ```
 
 ### 5、配置文件
@@ -229,72 +269,76 @@ logger.error("error");
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <Appenders>
-        <Console name="Console" target="org.apache.log4j.ConsoleAppender">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5.5p} [%15.15t] %style{%40.40c{1.}:%-4L}{cyan}: %msg%n" />
-        </Console>
-    </Appenders>
+  <Appenders>
+    <Console name="Console" target="org.apache.log4j.ConsoleAppender">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5.5p} [%15.15t] %style{%40.40c{1.}:%-4L}{cyan}: %msg%n" />
+    </Console>
+  </Appenders>
 
-    <Loggers>
-        <Root level="info">
-            <AppenderRef ref="Console" />
-        </Root>
-    </Loggers>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console" />
+    </Root>
+  </Loggers>
 </Configuration>
 ```
 
 ## 四、其他slf4j日志框架实现
 
 ```xml
-<!--slf4j core 使用slf4j必須添加-->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.27</version>
-</dependency>
-<!-- jul -->
-<dependency>
+<dependencys>
+    <!--slf4j core 使用slf4j必須添加-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.27</version>
+    </dependency>
+            <!-- jul -->
+    <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-jdk14</artifactId>
     <version>1.7.27</version>
-</dependency>
-<!--jcl -->
-<dependency>
+    </dependency>
+            <!--jcl -->
+    <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-jcl</artifactId>
     <version>1.7.27</version>
-</dependency>
-<!-- nop 日志开关-->
-<dependency>
+    </dependency>
+            <!-- nop 日志开关-->
+    <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-nop</artifactId>
     <version>1.7.27</version>
-</dependency>
+    </dependency>
+</dependencys>
 ```
 
 ## 五、将现有日志框架使用slf4j
 
 ```xml
 <!-- log4j-->
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>log4j-over-slf4j</artifactId>
-    <version>1.7.27</version>
-</dependency>
-
-<!-- jul -->
-<dependency>
+<dependencys>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>1.7.27</version>
+    </dependency>
+    
+            <!-- jul -->
+    <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>jul-to-slf4j</artifactId>
     <version>1.7.27</version>
-</dependency>
-
-<!--jcl -->
-<dependency>
+    </dependency>
+    
+            <!--jcl -->
+    <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>jcl-over-slf4j</artifactId>
     <version>1.7.27</version>
-</dependency>
+    </dependency>
+</dependencys>
 ```
 
 - jcl-over-slf4j.jar和 slf4j-jcl.jar不能同时部署。前一个jar文件将导致JCL将日志系统的选择委托给SLF4J，后一个jar文件将导致SLF4J将日志系统的选择委托给JCL，从而导致无限循环。
@@ -311,11 +355,11 @@ properties
 
 # 七、ANSI控制字符
 - 前景色
-  - \u001b[?m，其中 ? ∈ [30, 37]。 
+  - \u001b[?m，其中 ? ∈ [30, 37]。
   - \u001b[?;1m，其中 ? ∈ [30, 37]。
   - \u001b[38;5;?m，其中 ? ∈ [0, 255]
 - 背景色
-  - \u001b[?m，其中 ? ∈ [40, 47]。 
+  - \u001b[?m，其中 ? ∈ [40, 47]。
   - \u001b[?;1m，其中 ? ∈ [40, 47]。
   - \u001b[48;5;?m，其中 ? ∈ [0, 255]
 - 加粗加亮：\u001b[1m
