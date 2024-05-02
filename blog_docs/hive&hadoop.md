@@ -5,6 +5,8 @@
 
 ## 机器配置
 
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+
 ### 静态ip配置
 ```properties
 TYPE=Ethernet
