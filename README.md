@@ -1,31 +1,37 @@
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=aierx)](https://github.com/anuraghazra/github-readme-stats)
 
-
 windows设置代理
-> ip地址: 124.221.118.223  
-> @echo off \
-> set http_proxy=http://127.0.0.1:10811 \
-> set http_proxy=https://127.0.0.1:10811  \
-> netsh winhttp set proxy localhost:10811 \
-> set NO_AUTH_BOTO_CONFIG=C:\app\boto.cfg  \
-> echo proxy
+```shell
+@echo off 
+set http_proxy=http://127.0.0.1:10811 
+set http_proxy=https://127.0.0.1:10811 netsh winhttp set proxy localhost:10811 
+echo proxy
+```
+
 
 ### windows sdk download
 `https://developer.microsoft.com/en-us/windows/downloads/`
 
-
-
+```shell
 REG ADD HKEY_CLASSES_ROOT\*\shell\Vscode /d "open with code"
+
 REG ADD HKEY_CLASSES_ROOT\*\shell\Vscode /v Icon /t REG_SZ /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+
 REG ADD HKEY_CLASSES_ROOT\*\shell\Vscode\Command /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe  \"%V\""
 
 REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode /d "open in code"
+
 REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode /v Icon /t REG_SZ /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+
 REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode\Command /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe  \"%V\""
-
-
 gn gen --ide=vs2019 --args="is_debug=true" out\x64_vs
 ninja -C .\out\x64_vs
+```
+
+
+
+
+
 ### v8 ide编译
 gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true" \
 xcode 编译 \
