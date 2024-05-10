@@ -33,23 +33,31 @@ ninja -C .\out\x64_vs
 
 
 ### v8 ide编译
-gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true" \
-xcode 编译 \
-https://cloud.tencent.com/developer/article/1200595
+```shell
+gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true"
+```
 
-ITerm2 快捷键 \
-command + D 水平分屏 \
-command + shift + D 垂直分屏 \
-command + shift + i 同时输入 \
-command + w 关闭 \
-command + shift + w 全部关闭 \
-command + option + 方向键 调整焦点 \
+### ITerm2 快捷键 
+command + D 水平分屏 
+
+command + shift + D 垂直分屏 
+
+command + shift + i 同时输入 
+
+command + w 关闭 
+
+command + shift + w 全部关闭 
+
+command + option + 方向键 调整焦点 
+
 command + control + 方向键 调整大小
 
-
-lsof -i:3306  查看端口占用 \
+```shell
+lsof -i:3306  # 查看端口占用 
 lsof -i:3306 | awk 'NR==1 {next} {print $2}'
-kill -9 $(lsof -t -i :3306) 杀死端口
+kill -9 $(lsof -t -i :3306) # 杀死端口
+```
+
 
 ### 7、耗时分析
 curl -X GET -w "\nl: %{time_namelookup}\nc: %{time_connect}\ns: %{time_starttransfer}\nt: %{time_total}\n" -o a.txt  "baidu.com"
