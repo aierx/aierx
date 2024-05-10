@@ -105,3 +105,8 @@ https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
 pg_ctl -D pgdata -l ./pg.log start
 
 psql -U leiwenyong -d postgres
+
+### 显示生成的字节码
+```
+-Dsun.misc.ProxyGenerator.saveGeneratedFiles=true
+```
