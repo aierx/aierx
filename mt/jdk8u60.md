@@ -1,4 +1,4 @@
-# jdk8u60源码解析
+# jdk8u60
 
 > [写Java这么久，JDK源码编译过没？编译JDK源码踩坑纪实](https://blog.csdn.net/wangshuaiwsws95/article/details/107375724/) \
 > [一起来编译JDK吧！:)](https://blog.csdn.net/qq_39749527/article/details/107709708) \
