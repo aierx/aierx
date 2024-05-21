@@ -112,4 +112,8 @@ psql -U leiwenyong -d postgres
 -Dsun.misc.ProxyGenerator.saveGeneratedFiles=true
 // jdk8以后
 -Djdk.proxy.ProxyGenerator.saveGeneratedFiles=true
+
+
+flink是手动保存代码到java，然后重新编译成class文件，这样就能调试了
+flink执行List<Transformation<?>> transformations = this.translate(flatMapOperations);后，在返回值中会有使用字符串拼接的代码，把它保存一下就好了。
 ```
