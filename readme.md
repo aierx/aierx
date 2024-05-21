@@ -108,5 +108,8 @@ psql -U leiwenyong -d postgres
 
 ### 显示生成的字节码
 ```
+// jdk8及之前
 -Dsun.misc.ProxyGenerator.saveGeneratedFiles=true
+// jdk8以后
+-Djdk.proxy.ProxyGenerator.saveGeneratedFiles=true
 ```
