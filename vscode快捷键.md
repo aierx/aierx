@@ -5,7 +5,7 @@
 | Quick Fix                       | cmd + .            |
 | Go Back                         | ctrl + -           |
 | Go Forward                      | ctrl + shift + -   |
-| Go To Symbol In Accessible View | ctrl + cmd + o     |
+| Go To Symbol In Accessible View | shift + cmd + o    |
 | Trigger Parameter Hints         | ctrl + cmd + space |
 | flod all                        | cmd + k , cmd + 0  |
 | unfold all                      | cmd + k , cmd + j  |
