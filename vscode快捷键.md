@@ -9,5 +9,7 @@
 | Trigger Parameter Hints         | ctrl + cmd + space |
 | flod all                        | cmd + k , cmd + 0  |
 | unfold all                      | cmd + k , cmd + j  |
+| fold                            | opt + cmd + [      |
+| unfold                          | opt + cmd + ]      |
 | format                          | opt + shift + f    |
 | Go to  symbol in workspace      | cmd + t            |
