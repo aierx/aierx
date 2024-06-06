@@ -6,4 +6,8 @@
 | Go Back                         | ctrl + -           |
 | Go Forward                      | ctrl + shift + -   |
 | Go To Symbol In Accessible View | ctrl + cmd + o     |
-| Trigger Parameter Hints         | Ctrl + cmd + space |
+| Trigger Parameter Hints         | ctrl + cmd + space |
+| flod all                        | cmd + k , cmd + 0  |
+| unfold all                      | cmd + k , cmd + j  |
+| format                          | opt + shift + f    |
+| Go to  symbol in workspace      | cmd + t            |
