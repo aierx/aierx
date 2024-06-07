@@ -13,3 +13,4 @@
 | unfold                          | opt + cmd + ]      |
 | format                          | opt + shift + f    |
 | Go to  symbol in workspace      | cmd + t            |
+| Collapse Folders in Explores    | opt + shift + c    |
