@@ -62,7 +62,7 @@ tar -zxvf mysql-boost-8.0.20.tar.gz
 
 cd mysql-8.0.2
 
-# 修改一些代码（若不修改，后期编译会不通过）参考：https://zhuanlan.zhihu.com/p/411666378
+# 修改一些代码（在macos上，因为lldb的编译器过高需要修改）（若不修改，后期编译会不通过）参考：https://zhuanlan.zhihu.com/p/411666378
 
 mv VERSION MYSQL_VERSION 
 
