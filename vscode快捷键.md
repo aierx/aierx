@@ -7,7 +7,7 @@
 | Go Forward                      | ctrl + shift + -   |                     |
 | Go To Symbol In Accessible View | shift + cmd + o    | ctrl + shift + o    |
 | Go to  symbol in workspace      | cmd + t            | ctrl + t            |
-| Trigger Parameter Hints         | ctrl + cmd + space |                     |
+| Trigger Parameter Hints         | shift + cmd + space|                     |
 | flod all                        | cmd + k , cmd + 0  | ctrl + k , ctrl + 0 |
 | unfold all                      | cmd + k , cmd + j  | ctrl + k , ctrl + j |
 | fold                            | opt + cmd + [      |                     |
