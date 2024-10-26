@@ -22,6 +22,8 @@ tools\bin\avdmanager.bat create avd -k "system-images;android-33;google_apis;x86
 tools\bin\avdmanager.bat list avd
 
 tools\emulator.exe -avd pixel
+# 若是arm架构的sdk需要使用如下命令
+tools\emulator.exe -avd pixel_arm -qemu -machine virt
 
 vim $env:userprofile\.android\avd\Pixel.ini
 # hw.ramSize=8192
