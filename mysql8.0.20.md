@@ -197,8 +197,8 @@ set session optimizer_trace="enabled=off";
 
 ### 二、命令解析
 
-> yacc Shifting/Reducing （移进规约过程日志打印，启动参数：--debug="d,parser_debug"）
-> 日志参数（set debug = 'd:t:o,）
+> yacc Shifting/Reducing （移进规约过程日志打印，启动参数：--debug="d,parser_debug"） \
+> 日志参数（set debug = 'd:t:o';）
 
 #### 1、常用的mysql命令
 
