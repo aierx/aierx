@@ -1,7 +1,7 @@
 # mysql8.0.20源码解析
 
 > 前置条件：熟悉C、C++语言和Cmake、ninja、make编译工具以及lldb调试工具
-
+> https://blog.csdn.net/weixin_47156401/article/details/133579904
 ## 一、编译
 
 ### 1、环境准备
