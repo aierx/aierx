@@ -197,7 +197,8 @@ set session optimizer_trace="enabled=off";
 
 ### 二、命令解析
 
-> mysqld.trace打印trace日志: set debug = 'd:t:o,/Users/leiwenyong/Desktop/code/trace/mysqld.trace';
+> yacc Shifting/Reducing （移进规约过程日志打印，启动参数：--debug="d,parser_debug"）
+> 日志参数（set debug = 'd:t:o,）
 
 #### 1、常用的mysql命令
 
