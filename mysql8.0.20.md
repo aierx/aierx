@@ -632,6 +632,24 @@ IP首部20字节含义如下表，数据部分对应就是上层协议：
 
 #### 1、行记录格式
 
+|                                            |
+| ------------------------------------------ |
+| grow longer (not fix)                      |
+| null flags (not fix,but minimun is 1 byte) |
+|                                            |
+| reserve 1 (1 bit)                          |
+| reserve 2 (1 bit)                          |
+| delete_mask (1 bit)                        |
+| min_rec_mask (1 bit)                       |
+| n_owned (4 bits)                           |
+| heap_no (13 bits)                          |
+| record_type (3 bit3)                       |
+| next_record (2 bytes)                      |
+|                                            |
+| row_id (6 bytes or define size)            |
+| tx_id (6 bytes)                            |
+| roll_ptr (7 bytes)                         |
+
 ![record format](https://raw.githubusercontent.com/aierx/images/master/record.png)
 
 #### 2、table space
