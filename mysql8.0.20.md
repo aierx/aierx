@@ -1084,4 +1084,23 @@ b16 UNDO_SEGMENT_PAGE_LIST_BASE_NODE    @base()+4+4+4+4+8+2+8+4+2+2+2+12+2+2+10;
 // ---------------------file trailer--------------------------
 u64 File_Trailer                        @base()+0x4000-0x8;
 ```
+
+# Root Page Segment File Header
+```
+fn base(){
+    return 4*16*1024;
+};
+
+struct main {
+    u32 leaf_pages_inode_space_id;
+    u32 leaf_pages_inode_page_number;
+    u16 pages_inode_offset;
+    u32 internal_non_leaf_inode_space_id;
+    u32 internal_non_leaf_inode_page_number;
+    u16 internal_non_leaf_inode_offset;
+};
+
+main a_main @base()+74;
+
+```
 ![表结构](https://s2.loli.net/2023/08/07/VWr8CxJSRydi9E6.jpg)
