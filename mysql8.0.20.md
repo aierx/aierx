@@ -871,53 +871,54 @@ struct lnfipl{
 };
 
 // ------------------------inode header------------------------------
-struct list_base_node{
-	u32	a_list_length;
-	u32	b_first_page_number;
-	u16	c_first_offset;
-	u32	d_last_page_number;
-	u16	e_last_offset;
+struct base_node{
+	u32	list_length;
+	u32	first_page_number;
+	u16	first_offset;
+	u32	last_page_number;
+	u16	last_offset;
 };
 
-struct inode_header{
-	u64  		a_fseg_id;
-	u32  		b_fseg_not_full_n_used;
-	list_base_node  c_fseg_free;
-	list_base_node  d_fseg_not_full;
-	list_base_node  e_fseg_full;
-	u32 		f_fseg_magic_n;
-	u32 i_fragment_array_entry_0;
-	u32 i_fragment_array_entry_1;
-	u32 i_fragment_array_entry_2;
-	u32 i_fragment_array_entry_3;
-	u32 i_fragment_array_entry_4;
-	u32 i_fragment_array_entry_5;
-	u32 i_fragment_array_entry_6;
-	u32 i_fragment_array_entry_7;
-	u32 i_fragment_array_entry_8;
-	u32 i_fragment_array_entry_9;
-	u32 i_fragment_array_entry_10;
-	u32 i_fragment_array_entry_11;
-	u32 i_fragment_array_entry_12;
-	u32 i_fragment_array_entry_13;
-	u32 i_fragment_array_entry_14;
-	u32 i_fragment_array_entry_15;
-	u32 i_fragment_array_entry_16;
-	u32 i_fragment_array_entry_17;
-	u32 i_fragment_array_entry_18;
-	u32 i_fragment_array_entry_19;
-	u32 i_fragment_array_entry_20;
-	u32 i_fragment_array_entry_21;
-	u32 i_fragment_array_entry_22;
-	u32 i_fragment_array_entry_23;
-	u32 i_fragment_array_entry_24;
-	u32 i_fragment_array_entry_25;
-	u32 i_fragment_array_entry_26;
-	u32 i_fragment_array_entry_27;
-	u32 i_fragment_array_entry_28;
-	u32 i_fragment_array_entry_29;
-	u32 i_fragment_array_entry_30;
-	u32 i_fragment_array_entry_31;
+
+struct inode_entry{
+	u64  		fseg_id;
+	u32  		fseg_not_full_n_used;
+	base_node  fseg_free;
+	base_node  fseg_not_full;
+	base_node  fseg_full;
+	u32 f_fseg_magic_n;
+	u32 entry_0;
+	u32 entry_1;
+	u32 entry_2;
+	u32 entry_3;
+	u32 entry_4;
+	u32 entry_5;
+	u32 entry_6;
+	u32 entry_7;
+	u32 entry_8;
+	u32 entry_9;
+	u32 entry_10;
+	u32 entry_11;
+	u32 entry_12;
+	u32 entry_13;
+	u32 entry_14;
+	u32 entry_15;
+	u32 entry_16;
+	u32 entry_17;
+	u32 entry_18;
+	u32 entry_19;
+	u32 entry_20;
+	u32 entry_21;
+	u32 entry_22;
+	u32 entry_23;
+	u32 entry_24;
+	u32 entry_25;
+	u32 entry_26;
+	u32 entry_27;
+	u32 entry_28;
+	u32 entry_29;
+	u32 entry_30;
+	u32 entry_31;
 };
 
 
@@ -930,8 +931,12 @@ struct file_trailer{
 struct main{
 	file_header;
 	lnfipl;
-	inode_header;
-	inode_header;
+    inode_entry;
+    inode_entry;
+    inode_entry;
+    inode_entry;
+    inode_entry;
+    inode_entry;
 };
 main a_main @base();
 file_trailer 	d_file_trailer 		@base()+16*1024-8;
