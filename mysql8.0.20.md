@@ -3,7 +3,8 @@
 > 前置条件：熟悉C、C++语言和Cmake、ninja、make编译工具以及lldb调试工具
 > https://blog.csdn.net/weixin_47156401/article/details/133579904 \
 > [第9章 存放页的大池子-InnoDB的表空间 · 《MySQL 是怎样运行的：从根儿上理解 MySQL》](https://docs.kilvn.com/mysql-learning-notes/09-%E5%AD%98%E6%94%BE%E9%A1%B5%E7%9A%84%E5%A4%A7%E6%B1%A0%E5%AD%90-InnoDB%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4.html) \
-> [InnoDB 表空间](https://luyee.dev/archives/innodb-tablespace)
+> [InnoDB 表空间](https://luyee.dev/archives/innodb-tablespace) \
+> [segment 文档](https://blog.jcole.us/2013/01/04/page-management-in-innodb-space-files/)
 ## 一、编译
 
 ### 1、环境准备
