@@ -733,8 +733,10 @@ struct fsp_header{
 
 // ---------------------XDES Entry--------------------------
 struct xdes_flst_node{
-    u32 a_start;
-    u64 b_end;
+    u32 pre_no;
+    u16 pre_offset;
+    u32 next_no;
+    u16 nex_offset;
 };
 
 struct xdes_entry{
@@ -753,6 +755,42 @@ struct file_trailer{
 struct main{
 	file_header;
 	fsp_header;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
+	xdes_entry;
 	xdes_entry;
 	xdes_entry;
 };
