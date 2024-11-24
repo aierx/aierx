@@ -2,9 +2,12 @@
 
 windows设置代理
 ```shell
-@echo off 
-set http_proxy=http://127.0.0.1:10811 
+@echo off
+ 
+set http_proxy=http://127.0.0.1:10811
+
 set http_proxy=https://127.0.0.1:10811 netsh winhttp set proxy localhost:10811 
+
 echo proxy
 ```
 
@@ -13,6 +16,7 @@ echo proxy
 `https://developer.microsoft.com/en-us/windows/downloads/`
 
 ```shell
+
 REG ADD HKEY_CLASSES_ROOT\*\shell\Vscode /d "open with code"
 
 REG ADD HKEY_CLASSES_ROOT\*\shell\Vscode /v Icon /t REG_SZ /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe"
@@ -24,8 +28,11 @@ REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode /d "open in code"
 REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode /v Icon /t REG_SZ /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
 REG ADD HKEY_CLASSES_ROOT\Directory\shell\Vscode\Command /d "C:\Users\aleiw\AppData\Local\Programs\Microsoft VS Code\Code.exe  \"%V\""
+
 gn gen --ide=vs2019 --args="is_debug=true" out\x64_vs
+
 ninja -C .\out\x64_vs
+
 ```
 
 

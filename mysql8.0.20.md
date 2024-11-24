@@ -5,7 +5,39 @@
 > [第9章 存放页的大池子-InnoDB的表空间 · 《MySQL 是怎样运行的：从根儿上理解 MySQL》](https://docs.kilvn.com/mysql-learning-notes/09-%E5%AD%98%E6%94%BE%E9%A1%B5%E7%9A%84%E5%A4%A7%E6%B1%A0%E5%AD%90-InnoDB%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4.html) \
 > [InnoDB 表空间](https://luyee.dev/archives/innodb-tablespace) \
 > [segment 文档](https://blog.jcole.us/2013/01/04/page-management-in-innodb-space-files/) \
-> [InnoDB - Jeremy Cole](https://blog.jcole.us/innodb/)
+> [InnoDB - Jeremy Cole](https://blog.jcole.us/innodb/) \
+> [MySQL :: MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/) \
+> [数据库并发事务所带来的问题](https://blog.csdn.net/wkt520zch/article/details/118178601) \
+> [数据结构可视化](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) \
+
+
+# 开启日志功能
+
+```shell
+# 命令行 无需重启
+$ set GLOBAL log_output='FILE'
+$ set global general_log=on;
+$ set global general_log_file='C:/app/mysql_log.log';
+# 修改配置文件
+[mysqld]
+log_output=FILE	# 日志打印到文件，默认配置，可以配置成table，日志就会记录到mysql库中的相应的表中(slow日志也会受影响)
+general_log=1
+general_log_file=/application/mysql/logs/query_log.log
+# 修改密码
+alter user 'root'@'localhost' identified by '123456';
+flush privileges; 
+```
+
+# 开启慢日志记录
+
+```shell
+# 查看慢日志开启状态
+$ show variables like 'slow_query%';
+# 查看多少秒开始记录
+$ show variables like 'long_query_time';
+
+```
+
 ## 一、编译
 
 ### 1、环境准备
@@ -53,6 +85,8 @@ make -j 8 && make install
 apt install libncurses5-dev pkg-config
 ```
 
+#### mysql 段错误
+https://blog.csdn.net/ly_qiu/article/details/108061454
 
 ### 2、下载源代码
 
@@ -254,6 +288,36 @@ kill id
 SELECT * FROM performance_schema.data_LOCKS \G;
 -- 查看等待锁的事务
 SELECT * FROM performance_schema.data_LOCK_WAITS \G;
+
+alter USER 'root'@'localhost' IDENTIFIED BY '123456' PASSWORD EXPIRE NEVER;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456'; 
+flush privileges;
+SELECT @@global.TRANSACTION_ISOLATION;
+show global variables like '%trans%';
+set global transaction isolation level read committed;
+-- 查看表详情
+show create table user;
+desc user;
+-- 创建表
+create table user
+(
+    id   int                               not null,
+    name varchar(255) default 'leiwenyong' not null,
+    constraint user_pk
+        primary key (id)
+)engine innodb;
+-- 查看索引
+show index from user;
+-- 删除索引
+alter table t1.user drop index name;
+drop index pass on user;
+-- 添加索引
+alter table user add index pass (pass) using btree;
+-- 更改存储引擎
+alter table user engine=myisam;
+-- 优化过程
+set optimizer_trace="enabled=on";
+select * from information_schema.optimizer_trace\G
 
 ```
 

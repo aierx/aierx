@@ -1,11 +1,11 @@
 
 # 1、一些概念
-|缩写|英文|中文|
-|-------|-------|-------|
-|PE   |Physical Extend|物理扩展|
-|PV   |Phisical Volume | 物理卷|
-|VG   |Volume Group   |卷组  |
-|LV   |Logical Volume |逻辑卷|
+| 缩写 | 英文            | 中文     |
+| ---- | --------------- | -------- |
+| PE   | Physical Extend | 物理扩展 |
+| PV   | Phisical Volume | 物理卷   |
+| VG   | Volume Group    | 卷组     |
+| LV   | Logical Volume  | 逻辑卷   |
 
 
 
