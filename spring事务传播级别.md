@@ -158,18 +158,20 @@ public class UserService2 {
 ```
 
 ## 3、七种事务传播级别
-
-- TransactionDefinition.PROPAGATION_REQUIRED 支持当前事务，不存在创建新事务
-- TransactionDefinition.PROPAGATION_SUPPORTS 支持当前事务，不存在事务以非事务执行
-- TransactionDefinition.PROPAGATION_MANDATORY 支持当前事务，不存在抛出异常
-- TransactionDefinition.PROPAGATION_REQUIRES_NEW 创建新事务，如果当前存在事务暂停当前事务
-- TransactionDefinition.PROPAGATION_NOT_SUPPORTED 以非事务执行，如果当前存在事务暂停当前事务
-- TransactionDefinition.PROPAGATION_NEVER 以非事务执行，如果当前存在事务抛出异常
-- TransactionDefinition.PROPAGATION_NESTED 嵌套事务，还没搞清楚
+| type                                            | desc                                       |
+| ----------------------------------------------- | ------------------------------------------ |
+| TransactionDefinition.PROPAGATION_REQUIRED      | 支持当前事务，不存在创建新事务             |
+| TransactionDefinition.PROPAGATION_SUPPORTS      | 支持当前事务，不存在事务以非事务执行       |
+| TransactionDefinition.PROPAGATION_MANDATORY     | 支持当前事务，不存在抛出异常               |
+| TransactionDefinition.PROPAGATION_REQUIRES_NEW  | 创建新事务，如果当前存在事务暂停当前事务   |
+| TransactionDefinition.PROPAGATION_NOT_SUPPORTED | 以非事务执行，如果当前存在事务暂停当前事务 |
+| TransactionDefinition.PROPAGATION_NEVER         | 以非事务执行，如果当前存在事务抛出异常     |
+| TransactionDefinition.PROPAGATION_NESTED        | 嵌套事务，还没搞清楚                       |
 
 ## 4、需要与数据库的隔离级别区分清楚
-
-- read uncommitted 读未提交，可能产生“脏读”、“不可重复读”、“幻读”
-- read committed 读已提交，可能产生“不可重复读”、“幻读”，同一个事务多次读取同一个字段，读出来的结果可能不一样。另一个事务修改数据已提交。（查询中加锁）
-- repeatable read 可重复读，可能产生幻读，解释不清了。
-- serializable 序列化，可以避免脏读、不可重复读、幻读。当开销巨大，基本没人使用。
+| type             | desc                                         |
+| ---------------- | -------------------------------------------- |
+| read uncommitted | 读未提交，可能产生脏读、不可重复读、幻读     |
+| read committed   | 读已提交，可能产生不可重复读、幻读           |
+| repeatable read  | 可重复读，可能产生幻读                       |
+| serializable     | 串行化，避免脏读、不可重复读、幻读。开销巨大 |
