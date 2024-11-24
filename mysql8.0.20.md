@@ -1,6 +1,4 @@
-# mysql8.0.20源码解析
-
-> 前置条件：熟悉C、C++语言和Cmake、ninja、make编译工具以及lldb调试工具
+> 前置条件：熟悉C、C++语言和Cmake、ninja、make编译工具以及lldb调试工具 \
 > https://blog.csdn.net/weixin_47156401/article/details/133579904 \
 > [第9章 存放页的大池子-InnoDB的表空间 · 《MySQL 是怎样运行的：从根儿上理解 MySQL》](https://docs.kilvn.com/mysql-learning-notes/09-%E5%AD%98%E6%94%BE%E9%A1%B5%E7%9A%84%E5%A4%A7%E6%B1%A0%E5%AD%90-InnoDB%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4.html) \
 > [InnoDB 表空间](https://luyee.dev/archives/innodb-tablespace) \
@@ -9,86 +7,24 @@
 > [MySQL :: MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/) \
 > [数据库并发事务所带来的问题](https://blog.csdn.net/wkt520zch/article/details/118178601) \
 > [数据结构可视化](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) \
+> [InnoDB数据页结构（2）之记录头信息解析 - 知乎](https://zhuanlan.zhihu.com/p/552303064) \
+> [MySQL · 引擎特性 · InnoDB 文件系统之文件物理结构_51CTO博客_mysql存储引擎innodb](https://blog.51cto.com/59090939/1955122)
 
+# env
+- macos 13
+  - xcode12 xcode-select version 2396.
+  - macos ventura 13.2.1
+  - clang Apple clang version 14.0.0 (clang-1400.0.29.202)
+  - lldb lldb-1400.0.38.17
+  - cmake version 3.25.2
+- centos 7
+  - cmake3
+  - gcc 7.5
+- ubuntu 18.04
+  - cmake
+  - build-essential
 
-# 开启日志功能
-
-```shell
-# 命令行 无需重启
-$ set GLOBAL log_output='FILE'
-$ set global general_log=on;
-$ set global general_log_file='C:/app/mysql_log.log';
-# 修改配置文件
-[mysqld]
-log_output=FILE	# 日志打印到文件，默认配置，可以配置成table，日志就会记录到mysql库中的相应的表中(slow日志也会受影响)
-general_log=1
-general_log_file=/application/mysql/logs/query_log.log
-# 修改密码
-alter user 'root'@'localhost' identified by '123456';
-flush privileges; 
-```
-
-# 开启慢日志记录
-
-```shell
-# 查看慢日志开启状态
-$ show variables like 'slow_query%';
-# 查看多少秒开始记录
-$ show variables like 'long_query_time';
-
-```
-
-## 一、编译
-
-### 1、环境准备
-
-#### 1.1、macos
-
-- xcode12 xcode-select version 2396.
-- 系统：macos ventura 13.2.1
-- clang Apple clang version 14.0.0 (clang-1400.0.29.202)
-- lldb lldb-1400.0.38.17
-- cmake version 3.25.2
-- [mysql-8.0.20](https://downloads.mysql.com/archives/community/)
-
-更新系统 Sonoma 14.1
-
-![macos](https://raw.githubusercontent.com/aierx/images/master/202401190953583.png)
-
-### 1.2、centos
-
-- cmake3
-- gcc 7.5
-
-```shell
-yum -y install ncurses-devel
-ln -s /usr/local/bin/gcc /usr/bin/cc
-ln -s /usr/local/bin/g++ /usr/bin/c++
-ln -s /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
-增加sys/sycall.h
-修改os_compare_and_swap_thread_id->os_compare_and_swap_lint
-```
-
-#### 1.3、windows
-
-#### 1.4、ubuntu 18.04
-![ubuntu 18.04](https://raw.githubusercontent.com/aierx/images/master/20240115202640.png)
-
-```shell
-sudo apt install cmake
-sudo apt-get install build-essential
-
-wget https://www.openssl.org/source/openssl-1.1.1k.tar.gz --no-check-certificate
-tar -zxvf openssl-1.1.1k.tar.gz
-cd openssl-1.1.1k
-make -j 8 && make install
-apt install libncurses5-dev pkg-config
-```
-
-#### mysql 段错误
-https://blog.csdn.net/ly_qiu/article/details/108061454
-
-### 2、下载源代码
+# macos 13
 
 ```shell
 # 执行路径 /Users/leiwenyong/Downloads
@@ -106,8 +42,34 @@ mv VERSION MYSQL_VERSION
 
 sed -i '' 's|${CMAKE_SOURCE_DIR}/VERSION|${CMAKE_SOURCE_DIR}/MYSQL_VERSION|g' cmake/mysql_version.cmake
 ```
+# centos 7
 
-### 3、编译
+```shell
+yum -y install ncurses-devel
+ln -s /usr/local/bin/gcc /usr/bin/cc
+ln -s /usr/local/bin/g++ /usr/bin/c++
+ln -s /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
+增加sys/sycall.h
+修改os_compare_and_swap_thread_id->os_compare_and_swap_lint
+```
+
+## mysql 段错误
+https://blog.csdn.net/ly_qiu/article/details/108061454
+
+
+# ubuntu 18.04
+
+## 依赖
+
+```shell
+wget https://www.openssl.org/source/openssl-1.1.1k.tar.gz --no-check-certificate
+tar -zxvf openssl-1.1.1k.tar.gz
+cd openssl-1.1.1k
+make -j 8 && make install
+apt install libncurses5-dev pkg-config
+```
+
+## 编译
 
 ```shell
 # 执行路径 /Users/leiwenyong/Downloads/mysql-8.0.20/bld
@@ -117,9 +79,11 @@ cd bld
 # 需要指定自己openssl位置
 cmake .. -DWITH_BOOST=../boost -DWITH_SSL=/usr/local/Cellar/openssl@1.1/1.1.1t -DWITH_DEBUG=true
 make -j 8
+# 或者使用cmake build
+cmake build -j 8 .
 ```
 
-### 4、运行 mysql 服务
+# run mysql
 
 ```shell
 # 执行路径  /Users/leiwenyong/Downloads/mysql-8.0.20/bld
@@ -133,11 +97,7 @@ mysql --help | grep 'my.cnf'
 
 #启动mysql服务
 ./mysqld 
-```
 
-### 5、登入mysql
-
-```shell
 # 执行路径  /Users/leiwenyong/Downloads/mysql-8.0.20/bld/bin
 ./mysql -uroot -p'W9LzhqEwa,i&'
 
@@ -153,7 +113,7 @@ show variables like '%dir%';
 show processlist;
 ```
 
-### 6、单步调试
+# how to debug
 
  select语句断点位置 [CSDN 一条简单的sql是如何执行的](https://blog.csdn.net/why444216978/article/details/119857088)
 
@@ -191,13 +151,13 @@ select * from user where user = 'root'; #执行此命令，进入断点
  常用断点位置便签
  ![mark](https://raw.githubusercontent.com/aierx/images/master/1f7c1c354603aae6dd6d573db540d4dc179593.png)
 
-#### 6.1、lldb
+## lldb
 
 lldb中使用gui命令可打开图形化界面
 
 ![lldb](https://raw.githubusercontent.com/aierx/images/master/202401151248949.png)
 
-#### 6.2、clion
+## clion
 
 toolchains设置
 
@@ -211,13 +171,13 @@ cmake设置
 
 ![myqld](https://raw.githubusercontent.com/aierx/images/master/202401151252369.png)
 
-### 7、其他
+# other
 
-#### 7.1、mysql mysql.trace 定位方法调用过程
+## mysql mysql.trace 定位方法调用过程
 
 [MySQL 调试方式之mysqld.trace](https://www.cnblogs.com/jkin/p/16497783.html)
 
-#### 7.2、优化 查看优化选项
+## 优化 查看优化选项
 
 ```shell
 -- 首先开启trace
@@ -233,12 +193,39 @@ SELECT * FROM information_schema.OPTIMIZER_TRACE;
 set session optimizer_trace="enabled=off"; 
 ```
 
-### 二、命令解析
+## 开启慢日志记录
+
+```shell
+# 查看慢日志开启状态
+$ show variables like 'slow_query%';
+# 查看多少秒开始记录
+$ show variables like 'long_query_time';
+
+```
+
+## 开启日志功能
+
+```shell
+# 命令行 无需重启
+$ set GLOBAL log_output='FILE'
+$ set global general_log=on;
+$ set global general_log_file='C:/app/mysql_log.log';
+# 修改配置文件
+[mysqld]
+log_output=FILE	# 日志打印到文件，默认配置，可以配置成table，日志就会记录到mysql库中的相应的表中(slow日志也会受影响)
+general_log=1
+general_log_file=/application/mysql/logs/query_log.log
+# 修改密码
+alter user 'root'@'localhost' identified by '123456';
+flush privileges; 
+```
+
+ # 命令解析
 
 > yacc Shifting/Reducing （移进规约过程日志打印，启动参数：--debug="d,parser_debug"） \
 > 日志参数（set debug = 'd:t:o';）
 
-#### 1、常用的mysql命令
+## 常用的mysql命令
 
 ```sql
 
@@ -321,11 +308,11 @@ select * from information_schema.optimizer_trace\G
 
 ```
 
-#### 2、mysql存储结构
+## mysql存储结构
 
-#### 3、抽象语法树 AST
+## 抽象语法树 AST
 
-#### 4、select语句处理流程
+## select语句处理流程
 
 在information_schema.INNODB_INDEXS表中，保存了当前INNODB存储引擎的索引所在的页面。经过optimize计算是否需要索引，以及有没有主键。
 
@@ -386,17 +373,7 @@ mysql通过如下的迭代器，完成复杂语句的查询任务：
 - MaterializeIterator: 从另一个迭代器读取结果，并放入临时表，然后读取临时表记录。
 - FakeSingleRowIterator: 返回单行，然后结束。 仅在某些使用const表情况下才使用（例如只有const表，仍然需要一个迭代器来读取该单行）
 
-##### 4.1、group by语句处理流程
-
-##### 4.2、join语句处理流程
-
-##### 4.3、子查询处理流程
-
-##### 4.4、sorting实现
-
-##### 4.5、窗口函数实现
-
-### 5、update语句处理流程
+## update语句处理流程
 
 >索引作为特殊的行记录，操作和普通行记录操作类似
 > 索引没有transactionId和roll point，理所应当不会去记录undolog日志，如何做到正确查询到对应的行记录，如何保证的事物的一致性。
@@ -430,7 +407,7 @@ page_free链表：root -> 5
 
 可见 5、6、8对应的主键都是0x80000004
 
-#### 5.1、不更新主键
+### 不更新主键
 
 1. 原地更新\
 行记录中不存在变长字段，或变长字段更新后的值小于等于更新前的值（并且需要有相同的前缀的时候）（以及当前行记录为最后一条时），采用就地更新。
@@ -556,23 +533,23 @@ free链表：page header ->4->3
 
 > 使用optimize table tablename命令可以彻底page_free链表
 
-#### 5.2、更新主键
+### 更新主键
 
 更新操作在更新主键时，首先会将之前的行记录加入page_free链表头，然后执行新增一条行记录的操作。
 
-### 6、insert语句处理流程
+##  insert语句处理流程
 
 insert语句在执行操作时（不考虑分裂页的情况下，也就是当前页能够容纳需要新增的行记录），在更新操作和删除中我们可以知道，更新或删除清除掉的行记录会加入page_free链表的表头。进行插入操作，首先会获取当前free链表的表头行记录，判断当前表头行记录占用的空间是不是满足新增行记录所需要的空间，如果满足，直接在当前行记录上进行操作。否则将在当前页空闲位置进行插入操作（不会遍历free链表，寻找合适位置进行插入操作）。
 
-### 7、delete语句处理流程
+## delete语句处理流程
 
 delete语句处理比较简单，将当前行记录的delete_mark标记置为已删除，并且将当前行加入free链表表头。
 
-### 8、mysql binlog、undolog、redolog日志分析
+## binlog、undolog、redolog
 
-### 9、mvcc （Multiversion Concurrency Control）如何实现
+## Multiversion Concurrency Control
 
-#### 9.1、ACID
+### ACID
 
 - atomicity 原子性 使用undolog文件实现原子性。
 
@@ -582,7 +559,7 @@ delete语句处理比较简单，将当前行记录的delete_mark标记置为已
 
 - durability 持久性。
 
-#### 9.2、事物隔离级
+### 事物隔离级
 
 所有事务都不存在一类丢失更新。
 
@@ -594,7 +571,7 @@ delete语句处理比较简单，将当前行记录的delete_mark标记置为已
 
 - 【SE】serializable 串行执行，不存在并发问题 当前读，成一个队列执行。
 
-#### 9.3、当前读
+### 当前读
 
 在select语句的后面加上for update，就可以开启当前读
 
@@ -641,7 +618,7 @@ commit; -- 此时session2会读取到最新的值
 
 如果session1长时间没有提交事物，session2进入处理超时逻辑，返回超时文本。
 
-#### 9.4、快照读
+### 快照读
 
 [MySQL-MVCC实现原理](https://www.cnblogs.com/panxianhao/p/14904874.html)
 
@@ -667,9 +644,9 @@ changes_visible方法中传入的trx_id是行记录上面的id：
 
 - 如果当前线程事物id存在于活跃事物id列表，返回false
 
-#### 10、mysql主从同步
+## mysql主从同步
 
-### 三、wireshark抓包
+# wireshark
 
 > 使用 mysql -h127.0.0.1 -P3306 -uroot -pyour_password登入才能进行正常抓包 \
 > wireshark选择Loopback:lo0接口，设置过滤条件为tcp.port == 3306
@@ -696,9 +673,7 @@ IP首部20字节含义如下表，数据部分对应就是上层协议：
 
 ![picture4](https://raw.githubusercontent.com/aierx/images/master/202401151317595.png)
 
-### 四、物理存储格式
-
-#### 1、行记录格式
+# 物理存储格式
 
 |                                            |
 | ------------------------------------------ |
@@ -718,12 +693,14 @@ IP首部20字节含义如下表，数据部分对应就是上层协议：
 | tx_id (6 bytes)                            |
 | roll_ptr (7 bytes)                         |
 
-
 ![record format](https://raw.githubusercontent.com/aierx/images/master/record.png)
 
-#### 2、table space
+![row format](https://pic3.zhimg.com/80/v2-a75b74c85463d6718b8d251725e8c646_720w.webp)
 
-##### page type
+# table space
+
+## page type
+
 | File page types                     | hex    | desc                                                |
 | ----------------------------------- | ------ | --------------------------------------------------- |
 | FIL_PAGE_INDEX                      | 0x45bf | B-tree node                                         |
@@ -759,7 +736,7 @@ IP首部20字节含义如下表，数据部分对应就是上层协议：
 | FIL_PAGE_TYPE_ZLOB_FRAG = 28;       | 0x001c | Fragment pages of compressed LOB.                   |
 | FIL_PAGE_TYPE_ZLOB_FRAG_ENTRY = 29; | 0x001f | Index pages of fragment pages (compressed LOB)      |
 
-## FIL_PAGE_TYPE_FSP_HDR
+## FSP
 ```shell
 fn base(){
     return 0*16*1024;
@@ -864,7 +841,7 @@ main a_main @base();
 file_trailer 	d_file_trailer 		@base()+16*1024-8;
 ```
 
-## FIL_PAGE_IBUF_BITMAP
+## BITMAP
 ```shell
 fn base(){
     return 1*16*1024;
@@ -907,7 +884,7 @@ main a_main @base();
 file_trailer 	d_file_trailer 		@base()+16*1024-8;
 ```
 
-## FIL_PAGE_INODE
+## INODE
 ```shell
 fn base(){
     return 2*16*1024;
@@ -1008,7 +985,7 @@ main a_main @base();
 file_trailer 	d_file_trailer 		@base()+16*1024-8;
 ```
 
-## FIL_PAGE_INDEX & FIL_PAGE_RTREE
+## INDEX
 ```shell
 fn base(){
     return 4*16*1024;
@@ -1078,22 +1055,7 @@ file_trailer 	d_file_trailer 		@base()+16*1024-8;
 
 ```
 
-
-
-# 行记录格式
-[row format](https://zhuanlan.zhihu.com/p/552303064)
-[table space](https://blog.51cto.com/59090939/1955122)
-## record header
-![row format](https://pic3.zhimg.com/80/v2-a75b74c85463d6718b8d251725e8c646_720w.webp)
-
-| hex  | type   |
-| ---- | ------ |
-| 0x00 | normal |
-| 0x01 | index  |
-| 0x02 | min    |
-| 0x03 | max    |
-
-# undo log page header 
+## undo log page header 
 
 [undolog](https://catkang.github.io/2021/10/30/mysql-undo.html)
 
@@ -1148,24 +1110,5 @@ b16 UNDO_SEGMENT_PAGE_LIST_BASE_NODE    @base()+4+4+4+4+8+2+8+4+2+2+2+12+2+2+10;
 
 // ---------------------file trailer--------------------------
 u64 File_Trailer                        @base()+0x4000-0x8;
-```
-
-# Root Page Segment File Header
-```
-fn base(){
-    return 4*16*1024;
-};
-
-struct main {
-    u32 leaf_pages_inode_space_id;
-    u32 leaf_pages_inode_page_number;
-    u16 pages_inode_offset;
-    u32 internal_non_leaf_inode_space_id;
-    u32 internal_non_leaf_inode_page_number;
-    u16 internal_non_leaf_inode_offset;
-};
-
-main a_main @base()+74;
-
 ```
 ![表结构](https://s2.loli.net/2023/08/07/VWr8CxJSRydi9E6.jpg)

@@ -35,92 +35,80 @@ ninja -C .\out\x64_vs
 
 ```
 
-
-
-
-
 ### v8 ide编译
 ```shell
 gn gen --ide=vs2022 --winsdk="10.0.20348.1" out/x64.vs2022 --args="is_debug = true is_component_build = true  target_cpu = \"x64\" proprietary_codecs = true"
 ```
 
-### ITerm2 快捷键 
-command + D 水平分屏 
+# ITerm2 快捷键 
 
-command + shift + D 垂直分屏 
+| keyborad shortcuts         | command  |
+| -------------------------- | -------- |
+| command + D                | 水平分屏 |
+| command + shift + D        | 垂直分屏 |
+| command + shift + i        | 同时输入 |
+| command + w                | 关闭     |~~~~
+| command + shift + w        | 全部关闭 |
+| command + option + 方向键  | 调整焦点 |
+| command + control + 方向键 | 调整大小 |
 
-command + shift + i 同时输入 
-
-command + w 关闭 
-
-command + shift + w 全部关闭 
-
-command + option + 方向键 调整焦点 
-
-command + control + 方向键 调整大小
+# kill process
 
 ```shell
+
 lsof -i:3306  # 查看端口占用 
+
 lsof -i:3306 | awk 'NR==1 {next} {print $2}'
+
 kill -9 $(lsof -t -i :3306) # 杀死端口
+
 ```
 
 
-### 7、耗时分析
+# 7、耗时分析
 curl -X GET -w "\nl: %{time_namelookup}\nc: %{time_connect}\ns: %{time_starttransfer}\nt: %{time_total}\n" -o a.txt  "baidu.com"
 
-
-
-
-#### mysql 段错误
-https://blog.csdn.net/ly_qiu/article/details/108061454
-
-
-
-
-#### 设置没有显示器
+# 设置没有显示器
 -Djava.awt.headless=true
 
 
-#### mybatis热加载 实现
+# mybatis热加载 实现
 https://blog.csdn.net/lonelymanontheway/article/details/120203097
 
 
-
-#### tdlr 快速显示工具用法
+# tdlr 快速显示工具用法
 https://zhuanlan.zhihu.com/p/82649746
 
 
+# macos设置代理
 
-#### macos设置代理
+```shell
 `-setsecurewebproxy` `-setwebproxy` `-setsocksfirewallproxy`
-alias s='export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0    .1:7890 & networksetup -setsocksfirewallproxy "Wi-Fi" 127.0.0.1 7890'
+alias s='export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890 & networksetup -setsocksfirewallproxy "Wi-Fi" 127.0.0.1 7890'
 alias u='unset https_proxy http_proxy all_proxy & networksetup -setsocksfirewallproxystate "Wi-Fi" off'
 
+```
 
-#### linux设置代理
+# linux设置代理
+
+```shell
+
 alias s="export http_proxy=http://192.168.31.177:10809; export https_proxy=$http_proxy; echo 'HTTP Proxy on';"
 alias u="unset http_proxy; unset https_proxy; echo 'HTTP Proxy off';"
 alias c=clear
+```
 
 https://apiv1.v27qae.com/flydsubal/updgg33edt0gmbtn?sub=2&extend=1
 
 https://react.iamkasong.com/#%E7%AB%A0%E8%8A%82%E5%88%97%E8%A1%A8
-#### postgresql 编译
+
+
+# postgresql 编译
+```shell
 ./configure --enable-debug --enable-cassert --prefix=/usr/local/pgsql CFLAGS=-O0
 
 pg_ctl -D pgdata -l ./pg.log start
 
 psql -U leiwenyong -d postgres
 
-### 显示生成的字节码
-```
-// jdk8及之前
--Dsun.misc.ProxyGenerator.saveGeneratedFiles=true
-// jdk8以后
--Djdk.proxy.ProxyGenerator.saveGeneratedFiles=true
-
-
-flink是手动保存代码到java，然后重新编译成class文件，这样就能调试了
-flink执行List<Transformation<?>> transformations = this.translate(flatMapOperations);后，在返回值中会有使用字符串拼接的代码，把它保存一下就好了。
 ```
