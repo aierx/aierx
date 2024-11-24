@@ -17,18 +17,19 @@
   - visual studio 2010
 - macos
   - xcode 4.6.1 [下载地址](https://developer.apple.com/download/all)
-- ubuntu18.04
+- ubuntu 18.04
+  - make 3.81
+  - gcc 4.x
 - centos7
   - gcc 4.x
   - gdb 8.x
 
 # ubuntu 18.04
 
-## 安装make3.81
-
-下载源码地址：https://ftp.gnu.org/gnu/make/
+## make 3.81
 
 ```bash
+wget https://mirrors.huaweicloud.com/gnu/make/make-3.81.tar.gz
 tar -zxvf make-3.81.tar.gz
 vim make-3.81/glob/glob.c
 ```
@@ -45,9 +46,9 @@ vim make-3.81/glob/glob.c
 执行
 
 ```bash
-$ ./configure --prefix=/usr
-$ sudo make
-$ sudo make install
+cd make-3.81
+./configure --prefix=/usr
+sudo make & sudo make install
 ```
 
 ## gcc
@@ -56,17 +57,17 @@ $ sudo make install
 # 安装指定版本gcc和g++
 sudo apt-get install gcc-4.8 g++-4.8 -y
 ls /usr/bin/gcc*
-# 添加版本
+# 添加版本 优先级，数字越大优先级越高。
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100
-# 切换版本
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90
 sudo update-alternatives --config gcc
+
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 sudo update-alternatives --config g++
 ```
 
-## 依赖
+## dependence
 
 ```shell
 sudo apt install unzip zip
@@ -79,28 +80,19 @@ sudo apt-get install libasound2-dev
 sudo apt-get install autoconf
 ```
 
-## 下载jdk
+## jdk
 
 ```shell
-apt-get install mercurial
+sudo apt-get install mercurial
 hg clone https://hg.openjdk.java.net/jdk8u/jdk8u60/
+cd jdk8u60/
+chmod +x get_source.sh
+./get_source.sh
 ```
 
-## 编译配置文件生成和开始编译
+## modify the following code
 
-```shell
-# 配置编译文件
-bash configure --enable-debug --with-jvm-variants=server
-bash configure --disable-warnings-as-errors --with-debug-level=slowdebug --with-jvm-variants=server
-# 开始编译
-make images
-```
-
-- `disable-warnings-as-errors`选项是禁止把`warning` 当成`error`
-- `--with-debug-level=slowdebug`用来设置编译的级别，可选值：`release`、`fastdebug`、`slowde-bug`
-- `with-jvm-variants` 编译特定模式的HotSpot虚拟机，可选值：`server`、`client`、`minimal`、`core`、`zero`、`custom`
-
-## 踩坑1、系统版本不支持
+版本问题
 
 ```shell
 # 修改该文件
@@ -109,23 +101,42 @@ vim hotspot/make/linux/Makefile
 SUPPORTED_OS_VERSION = 2.4% 2.5% 2.6% 3% 4% 5%
 ```
 
-## 踩坑2、jdk环境设置7
-
-```shell
-# 修改该文件
-vim hotspot/make/linux/makefiles/rules.make
-# 设置编译jdk的版本，也就是自己安装的jdk版本（一般是当前被编译的jdk前一个版本）
-BOOT_SOURCE_LANGUAGE_VERSION = 7
-```
-
-## 踩坑3、忽略告警
+告警
 
 ```shell
 # 修改该文件
 vim hotspot/make/linux/makefiles/gcc.make
-# 忽略c语言一些文件的告警
+# 注释以下代码
 WARNINGS_ARE_ERRORS = -Werror
 ```
+
+时间限制报错
+
+```shell
+vim jdk/make/src/classes/build/tools/generatecurrencydata/GenerateCurrencyData.java
+# 原先是10年，改成100年就好了
+if (Math.abs(time - System.currentTimeMillis()) > ((long) 100) * 365 * 24 * 60 * 60 * 1000) 
+```
+
+## compiledb
+
+```shell
+sudo apt install python-pip -y
+pip install compiledb
+
+```
+
+## 编译
+
+```shell
+# 配置编译文件
+bash configure --with-debug-level=slowdebug --with-jvm-variants=server
+# 开始编译; 如果compiledb找不到，重新打开一下zsh
+compiledb make
+```
+
+- `--with-debug-level=slowdebug`用来设置编译的级别，可选值：`release`、`fastdebug`、`slowde-bug`
+- `with-jvm-variants` 编译特定模式的HotSpot虚拟机，可选值：`server`、`client`、`minimal`、`core`、`zero`、`custom`
 
 # macos
 
