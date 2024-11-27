@@ -56,17 +56,50 @@ ln -s /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
 ## mysql 段错误
 https://blog.csdn.net/ly_qiu/article/details/108061454
 
+# ubuntu 24.04.1
+
+## 依赖
+
+```shell
+sudo apt install build-essential  libncurses5-dev pkg-config gcc-9 g++-9
+# 切换gcc版本 添加版本 优先级，数字越大优先级越高。
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90
+sudo update-alternatives --config gcc
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 90
+sudo update-alternatives --config g++
+
+# openssl 1.1.1
+wget https://www.openssl.org/source/openssl-1.1.1k.tar.gz --no-check-certificate
+tar -zxvf openssl-1.1.1k.tar.gz
+cd openssl-1.1.1k
+./config
+make -j 8 && make install
+```
+## 编译
+```shell
+mkdir bld
+cd bld
+cmake .. -DWITH_BOOST=../boost
+# 使用多个线程可能会报错，出现错误减少线程数量即可
+make -j 8
+```
+
 
 # ubuntu 18.04
 
 ## 依赖
 
 ```shell
+apt install libncurses5-dev pkg-config libtirpc-dev
+
+# openssl 1.1.1
 wget https://www.openssl.org/source/openssl-1.1.1k.tar.gz --no-check-certificate
 tar -zxvf openssl-1.1.1k.tar.gz
 cd openssl-1.1.1k
+./config
 make -j 8 && make install
-apt install libncurses5-dev pkg-config
 ```
 
 ## 编译
