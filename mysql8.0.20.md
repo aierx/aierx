@@ -9,7 +9,7 @@
 > [数据结构可视化](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html) \
 > [InnoDB数据页结构（2）之记录头信息解析 - 知乎](https://zhuanlan.zhihu.com/p/552303064) \
 > [MySQL · 引擎特性 · InnoDB 文件系统之文件物理结构_51CTO博客_mysql存储引擎innodb](https://blog.51cto.com/59090939/1955122) \
-> [架构图])(https://github.com/asdbex1078/MySQL/blob/master/mysql-storage-engines/innodb/1.0.MySQL%E6%9E%B6%E6%9E%84%E5%88%B0innoDB%E6%9E%B6%E6%9E%84.md)
+> [架构图](https://github.com/asdbex1078/MySQL/blob/master/mysql-storage-engines/innodb/1.0.MySQL%E6%9E%B6%E6%9E%84%E5%88%B0innoDB%E6%9E%B6%E6%9E%84.md)
 
 # env
 - macos 13
