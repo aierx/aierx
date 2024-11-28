@@ -24,6 +24,14 @@
 - ubuntu 18.04
   - cmake
   - build-essential
+ 
+# 性能测试
+
+[华为云rds性能测试](https://support.huaweicloud.com/pwp-rds/rds_swp_mysql_01.html)
+
+[github: sysbench 1.0.18](https://github.com/akopytov/sysbench)
+
+
 
 # macos 13
 
