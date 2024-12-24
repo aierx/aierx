@@ -4,7 +4,9 @@
 1、配置无线，确保每次重启时，无线没有被禁用
 
 root@OpenWrt:~# vim /etc/config/wireless
-在已经配置好的无线配置里，添加这一行option disabled '0'  
+
+在已经配置好的无线配置里，添加这一行option disabled '0'
+
 ```
 config wifi-device 'radio0'
 	option type 'mac80211'
