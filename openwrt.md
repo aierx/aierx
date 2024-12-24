@@ -1,3 +1,6 @@
+
+>[X86小主机，安装无线网卡，OpenWrt官方固件，开启wifi功能](https://www.cnblogs.com/Magiclala/p/18426766)
+
 1、配置无线，确保每次重启时，无线没有被禁用
 
 root@OpenWrt:~# vim /etc/config/wireless
