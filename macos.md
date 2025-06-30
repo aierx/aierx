@@ -23,8 +23,10 @@ Macos软件推荐
 | Karabiner-Elements | 按键映射                                            | https://karabiner-elements.pqrs.org/               |
 | scrcpy             | 安卓手机投屏软件                                    | https://github.com/Genymobile/scrcpy               |
 | fig                | 命令行提示工具                                      | https://fig.io/                                    |
-| conntrack                | 抓包工具                                      |                                     |
-
+| conntrack          | 抓包工具                                            |                                                    |
+| Alacritty          | 终端工具（跨平台）                                  | https://alacritty.org/                             |
+| iterm2             | 终端工具                                            | https://iterm2.com/                                |
+| viu                | 终端图片查看｜                                      | https://github.com/atanunq/viu                     |
 
 
 # 工具下载
