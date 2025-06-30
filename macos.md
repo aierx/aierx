@@ -26,7 +26,7 @@ Macos软件推荐
 | conntrack          | 抓包工具                                            |                                                    |
 | Alacritty          | 终端工具（跨平台）                                  | https://alacritty.org/                             |
 | iterm2             | 终端工具                                            | https://iterm2.com/                                |
-| viu                | 终端图片查看｜                                      | https://github.com/atanunq/viu                     |
+| viu                | 终端图片查看                                       | https://github.com/atanunq/viu                     |
 
 
 # 工具下载
