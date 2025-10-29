@@ -158,6 +158,7 @@ public class Main {
 ### 1、vm参数
 
 -Dlog4j.configurationFile=http://localhost:8000/log4j2.xml 从指定位置获取配置
+-Dlog4j2.Configuration.allowedProtocols=http 支持http
 
 ### 2、默认配置文件及顺序
 
